@@ -10,7 +10,7 @@ import UIKit
 
 public extension UIColor{
     // 例：
-    public static var primary{
+    static var primary: UIColor{
         UIColor.red
         // TODO: デザインされたカラーに入れ替える
         // UIColor(designed: "{asset name}")

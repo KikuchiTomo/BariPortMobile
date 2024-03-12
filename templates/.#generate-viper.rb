@@ -1,1 +1,0 @@
-tomokikuchi@TomonoMacBook-Pro.local.39626

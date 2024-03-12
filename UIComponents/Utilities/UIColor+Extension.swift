@@ -10,6 +10,6 @@ import UIKit
 
 public extension UIColor{
     convenience init(designed: String){
-        self.init(named: designed, in: Bundle.current)!
+        self.init(named: designed, in: Bundle.current, compatibleWith: .none)!
     }
 }

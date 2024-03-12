@@ -25,12 +25,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         
         // メイン画面が決まってないので, 一旦保留
-        // VC.setContentView(generateMainView())
+        Task{ @MainActor in
+            VC.dismiss(animated:true)
+            VC.setContentView(showProperView())
+        }
     }
     
-    // func generateMainView() -> UIViewController{
-    //     XXXRouter.assembleModules()
-    // }
+    func showProperView() -> UIViewController{
+        // TODO: ここで最初のViewをどれ見せるか決める (APIは別frameworkとして, 認証しているか聞きに行ってSignUp/SignIn, Homeなどの切り替えを行う)
+        SignUpRouter.assembleModules()
+    }
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

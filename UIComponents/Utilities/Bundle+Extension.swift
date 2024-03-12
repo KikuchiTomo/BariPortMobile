@@ -8,7 +8,7 @@
 import Foundation
 
 extension Bundle{
-    static var current{
+    static var current: Bundle{
         class BundleDummyClass{}
         return Bundle(for: type(of: BundleDummyClass()))
     }

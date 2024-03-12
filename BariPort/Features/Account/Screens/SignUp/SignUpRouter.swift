@@ -1,11 +1,11 @@
 import UIKit
 import Foundation
 
-protocol {{screen}}Wireframe: AnyObject{
+protocol SignUpWireframe: AnyObject{
 
 }
 
-final class {{screen}}Router: {{screen}}Wireframe{
+final class SignUpRouter: SignUpWireframe{
     private unowned let viewController: UIViewController
 
     private init(viewController: UIViewController){
@@ -13,11 +13,11 @@ final class {{screen}}Router: {{screen}}Wireframe{
     }
 
     @MainActor static func assembleModules() -> UIViewController{
-        let view = {{screen}}ViewController()
-        let router = {{screen}}Router(viewController: view)
-        let interactor = {{screen}}Interactor()
+        let view = SignUpViewController()
+        let router = SignUpRouter(viewController: view)
+        let interactor = SignUpInteractor()
 
-        let presenter = {{screen}}Presenter(
+        let presenter = SignUpPresenter(
           view: view,
           router: router,
           interactor: interactor                        
