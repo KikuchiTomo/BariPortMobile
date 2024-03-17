@@ -33,7 +33,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func showProperView() -> UIViewController{
         // TODO: ここで最初のViewをどれ見せるか決める (APIは別frameworkとして, 認証しているか聞きに行ってSignUp/SignIn, Homeなどの切り替えを行う)
-        SignUpRouter.assembleModules()
+        AppMenuViewRouter.assembleModules()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
