@@ -11,6 +11,20 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .systemGray3 // ここで好きな色を設定
+
+            // UITabBarのstandardAppearanceとscrollEdgeAppearanceに適用
+            UITabBar.appearance().standardAppearance = appearance
+            if #available(iOS 15.0, *) {
+                UITabBar.appearance().scrollEdgeAppearance = appearance
+            }
+        } else {
+            // iOS 15以前の場合のフォールバック
+            UITabBar.appearance().barTintColor = .systemGray3
+        }
         return true
     }
 
