@@ -7,8 +7,11 @@ JAPAN CONNECT HACKTHON 用リポジトリ
 brew install xcodegen
 brew install rbenv
 rbenv install `cat .ruby-version`
+cp evn.sample env
 make
 ```
+
+`env`の中身は各自設定をお願いします．現段階では, 特に設定しなくても開発できると思います！
 
 > [!NOTE]
 > `rbenv`でのインストールにこけるときはこの辺が参考になります．
