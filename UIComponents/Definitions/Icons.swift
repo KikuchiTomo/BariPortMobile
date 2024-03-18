@@ -8,8 +8,22 @@
 import Foundation
 import UIKit
 
-public extension UIImage{
-    /* Features 単位で構造体定義 */
+public extension UIImage{   
+    struct Common{
+        public static var directMessage: UIImage{
+            UIImage(designed: "direct_message")
+        }
+        
+        public static var floatRing: UIImage{
+            UIImage(designed: "float_ring")
+        }
+        
+        public static var home: UIImage{
+            UIImage(designed: "home")
+        }
+    }
+    
+     /* Features 単位で構造体定義 */
     struct Account{
         public static var VisibleEyeOpen: UIImage{
             UIImage(systemName: "eye.fill")!
