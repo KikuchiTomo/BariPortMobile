@@ -11,6 +11,8 @@ public enum LocalizationString: String{
     case directMessageTabBarItemLabel
     case homeTabBarItemLabel
     case supportTabBarItemLabel
+    case commonHereLabel
+    case appDownloadLabel
     
     public var localized: String{
         get {

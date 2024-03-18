@@ -2,7 +2,7 @@ import UIKit
 import Foundation
 
 protocol MessageListWireframe: AnyObject{
-
+    func presetDirectMessageView(directMessageID: UUID)
 }
 
 final class MessageListRouter: MessageListWireframe{
@@ -32,5 +32,9 @@ final class MessageListRouter: MessageListWireframe{
             viewController: MessageListRouter.assembleModules(),
             tabItem: .directMessageTabBarItem(tag: tag)
         )
+    }
+    
+    @MainActor func presetDirectMessageView(directMessageID: UUID) {
+        self.viewController.navigationController?.pushViewController(DirectMessageRouter.assembleModules(), animated: true)
     }
 }

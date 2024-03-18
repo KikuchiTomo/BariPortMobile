@@ -32,4 +32,10 @@ public extension UIImage{
             // UImage(designed: "{asset name}")
         }
     }
+    
+    struct Messages{
+        public static var NoImageUser: UIImage{
+            UIImage(systemName: "person.circle.fill")!
+        }
+    }
 }
