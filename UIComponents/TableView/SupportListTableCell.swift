@@ -86,7 +86,6 @@ public class SupportListTableCell<Dataframe: SupportListTableViewDataframe>: UIT
         self.companyLabel.text = content.companyName
         self.commentLabel.text = content.comment
         
-        
         self.reputationStars.setNeedsDisplay()
      
         let df = DateFormatter()
@@ -104,6 +103,10 @@ public class SupportListTableCell<Dataframe: SupportListTableViewDataframe>: UIT
             iconView.image = image.withRenderingMode(.alwaysTemplate)
             iconView.tintColor = .gray
         }
+        
+        self.commentLabel.textAlignment = .left
+        self.companyLabel.textAlignment = .left
+        self.datetimeLabel.textAlignment = .right
         
         layoutViews()
     }
