@@ -9,4 +9,8 @@ struct DirectMessageEntity{
         var userIconURL: URL?
         var body: String                
     }
+    
+    struct Hello{
+        let message: String
+    }
 }

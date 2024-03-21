@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import BariPortAPI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -27,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // メイン画面が決まってないので, 一旦保留
         Task{ @MainActor in
             VC.dismiss(animated:true)
-            VC.setContentView(showProperView())
+            VC.setContentView(showProperView())                       
         }
     }
     

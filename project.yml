@@ -1,4 +1,8 @@
 name: BariPort
+packages:
+  Alamofire:
+    url: https://github.com/Alamofire/Alamofire
+    version: 4.9.0
 configs:
   Debug: debug
   Release: release
@@ -60,6 +64,7 @@ targets:
     platform: iOS
     dependencies:
       - target: UIComponents
+      - target: BariPortAPI
     settings:
       base:
         SUPPORTS_MACCATALYST: NO
@@ -157,6 +162,18 @@ targets:
     - name: BariPortUITests
       path: BariPortUITests
     type: bundle.ui-testing
+  BariPortAPI:
+    dependencies:
+    - package: Alamofire
+    type: framework
+    platform: iOS
+    info:
+      path: BariPortAPI/info.plist
+    sources:
+      - path: BariPortAPI
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: jp.japan-connect-hackathon.BariPortAPI
   UIComponents:
     type: framework
     platform: iOS
