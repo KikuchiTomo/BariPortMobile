@@ -183,7 +183,7 @@ public class AsyncArray<T>{
     
     func remove(where predicate: @escaping (T) -> Bool, completion: ((T) -> Void)? = nil) {
         let op = {
-            guard let index = self.rawArray.index(where: predicate) else { return }
+            guard let index = self.rawArray.firstIndex(where: predicate) else { return }
             let element = self.rawArray.remove(at: index)
             DispatchQueue.main.async {
                 completion?(element)

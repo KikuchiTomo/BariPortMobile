@@ -13,6 +13,10 @@ public enum LocalizationString: String{
     case supportTabBarItemLabel
     case commonHereLabel
     case appDownloadLabel
+    case supportButtonLabel
+    case checkSupportDetailButtonLabel
+    case reputationFromCorporationsLabel
+    case supportListReputationLabel
     
     public var localized: String{
         get {
