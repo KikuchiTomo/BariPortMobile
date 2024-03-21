@@ -21,6 +21,14 @@ public extension UIImage{
         public static var home: UIImage{
             UIImage(designed: "home")
         }
+        
+        public static var Star: UIImage{
+            UIImage(systemName: "star")!
+        }
+        
+        public static var StarFill: UIImage{
+            UIImage(systemName: "star.fill")!
+        }
     }
     
      /* Features 単位で構造体定義 */
@@ -37,5 +45,9 @@ public extension UIImage{
         public static var NoImageUser: UIImage{
             UIImage(systemName: "person.circle.fill")!
         }
+    }
+    
+    struct Support{
+       
     }
 }
