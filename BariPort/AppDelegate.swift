@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .systemGray3 // ここで好きな色を設定
+            appearance.backgroundColor = .systemGray6 // ここで好きな色を設定
 
             // UITabBarのstandardAppearanceとscrollEdgeAppearanceに適用
             UITabBar.appearance().standardAppearance = appearance
@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         } else {
             // iOS 15以前の場合のフォールバック
-            UITabBar.appearance().barTintColor = .systemGray3
+            UITabBar.appearance().barTintColor = .systemGray6
         }
         return true
     }
