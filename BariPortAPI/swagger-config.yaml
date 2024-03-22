@@ -1,0 +1,303 @@
+openapi: "3.0.0"
+info:
+  version: "0.0.1"
+  title: "BariPort API"
+  description: "BariPortのAPIです。"
+servers:
+  - url: "http://localhost:8080"
+    description: "このURLはダミーのため、実際には使用しません。"
+components:
+  schemas:
+    Hello:
+      type: "object"
+      properties:
+        message:
+          type: "string"
+    Users:
+      type: "object"
+      properties:
+        id:
+          type: "string" # BEGIN: id type
+        displayName:
+          type: "string"
+        apiKey:
+          type: "string"
+    chat_room_participants:
+      type: "object"
+      properties:
+        id:
+          type: "string" # BEGIN: id type
+        userId:
+          type: "string" # BEGIN: userId type
+        chatRoomId:
+          type: "string" # BEGIN: chatRoomId type
+    chat_rooms:
+      type: "object"
+      properties:
+        id:
+          type: "string" # BEGIN: id type
+        name:
+          type: "string"
+        type:
+          type: "string" # BEGIN: type type
+        projectId:
+          type: "string" # BEGIN: projectId type
+    messages:
+      type: "object"
+      properties:
+        id:
+          type: "string" # BEGIN: id type
+        userId:
+          type: "string" # BEGIN: userId type
+        chatRoomId:
+          type: "string" # BEGIN: chatRoomId type
+        text:
+          type: "string" # BEGIN: text type
+    reviews:
+      type: "object"
+      properties:
+        id:
+          type: "string" # BEGIN: id type
+        companyId:
+          type: "string" # BEGIN: companyId type
+        userId:
+          type: "string" # BEGIN: userId type
+        evaluationScore:
+          type: "integer"
+        description:
+          type: "string"
+    companies:
+      type: "object"
+      properties:
+        id:
+          type: "string" # BEGIN: id type
+        name:
+          type: "string"
+    projects:
+      type: "object"
+      properties:
+        id:
+          type: "string" # BEGIN: id type
+        companyId:
+          type: "string" # BEGIN: companyId type
+        name:
+          type: "string"
+        description:
+          type: "string"
+
+security:
+  - identity_server_auth:
+      - api
+paths:
+  /projects/list:
+    get:
+      tags:
+        - "projects"
+      summary: "プロジェクト一覧取得"
+      description: "プロジェクト一覧を取得します。"
+      operationId: "getProjects"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string" # BEGIN: id type
+                    name:
+                      type: "string"
+                    description:
+                      type: "string"
+                    company:
+                      type: "object"
+                      properties:
+                        id:
+                          type: "string" # BEGIN: id type
+                        name:
+                          type: "string"
+        "404":
+          description: "プロジェクトが存在しません。"
+        "500":
+          description: "取得中に何らかのエラーが発生しました。"
+  /chat_room_participants:
+    post:
+      tags:
+        - "chat_room_participants"
+      summary: "チャットルーム参加登録"
+      description: "チャットルームの参加を登録します。"
+      operationId: "postChatRoomParticipants"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                chatRooom:
+                  type: "object"
+                  properties:
+                    name:
+                      type: "string"
+                    description:
+                      type: "string"
+                    company:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+      responses:
+        "201":
+          description: "成功"
+        "400":
+          description: "userIdまたはchatRoomIdが渡されていないか、不正です。"
+        "500":
+          description: "登録中に何らかのエラーが発生しました。"
+  /chat_room:
+    get:
+      tags:
+        - "chat_rooms"
+      summary: "チャットルーム情報取得"
+      description: "チャットルーム情報を取得します。"
+      operationId: "getChatRooms"
+      parameters:
+        - name: "projectId"
+          in: "query"
+          required: true
+          schema:
+            type: "string" # BEGIN: projectId type
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/chat_rooms"
+        "400":
+          description: "projectIdが渡されていないか、不正です。"
+        "404":
+          description: "チャットルームが存在しません。"
+        "500":
+          description: "取得中に何らかのエラーが発生しました。"
+  /messages:
+    get:
+      tags:
+        - "messages"
+      summary: "メッセージ一覧取得"
+      description: "メッセージ一覧を取得します。"
+      operationId: "getMessages"
+      parameters:
+        - name: "chatRoomId"
+          in: "query"
+          required: true
+          schema:
+            type: "string" # BEGIN: chatRoomId type
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/messages"
+        "400":
+          description: "chatRoomIdが渡されていないか、不正です。"
+        "404":
+          description: "メッセージが存在しません。"
+        "500":
+          description: "取得中に何らかのエラーが発生しました。"
+  /message:
+    post:
+      tags:
+        - "messages"
+      summary: "メッセージ投稿"
+      description: "メッセージを投稿します。"
+      operationId: "postMessage"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId:
+                  type: "string" # BEGIN: userId type
+                chatRoomId:
+                  type: "string" # BEGIN: chatRoomId type
+                text:
+                  type: "string"
+                sendAt:
+                  type: "string"
+      responses:
+        "201":
+          description: "成功"
+        "400":
+          description: "userIdまたはchatRoomIdまたはtextが渡されていないか、不正です。"
+        "500":
+          description: "登録中に何らかのエラーが発生しました。"
+  /reviews/list:
+    get:
+      tags:
+        - "reviews"
+      summary: "レビュー一覧取得"
+      description: "レビュー一覧を取得します。"
+      operationId: "getReviews"
+      responses:
+        "200":
+          description: "成功"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "string" # BEGIN: id type
+                    company:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                    userId:
+                      type: "string" # BEGIN: userId type
+                    evaluationScore:
+                      type: "integer"
+                    description:
+                      type: "string"
+                    sendAt:
+                      type: "string"
+        "404":
+          description: "レビューが存在しません。"
+        "500":
+          description: "取得中に何らかのエラーが発生しました。"
+  /hello:
+    get:
+      tags:
+        - "hello"
+      summary: "テストAPI"
+      description: "テスト用のAPIです"
+      operationId: "hello"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string" # BEGIN: userId type
+        "400":
+          description: "error 400"
+        "404":
+          description: "error 404"
+        "500":
+          description: "error 500"
+          
