@@ -42,8 +42,22 @@ class TabHostViewController<TabItem: TabHostDataframe>: UITabBarController, UITa
 extension TabHostViewController{
     func configureNavigationBarAppearance() {
         let appearance = UINavigationBarAppearance()
+        // 背景色を設定
+        appearance.backgroundColor = UIColor.systemBlue
+        
+        // タイトルテキストの属性を設定
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black, .font: UIFont.boldSystemFont(ofSize: 20)]
+        
+        // 大きなタイトルテキストの属性を設定（iOS 11 以降で利用可能）
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black, .font: UIFont.boldSystemFont(ofSize: 34)]
+        
+        // ボタンの外観をカスタマイズ
+        let buttonAppearance = UIBarButtonItemAppearance(style: .plain)
+        buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.buttonAppearance = buttonAppearance
+        
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .systemGray3 // グレーの背景色を設定
+        appearance.backgroundColor = .systemGray6 // グレーの背景色を設定
 
         // iOS 15以降では、新しいアピアランスAPIを使用してスタイルを設定します。
         UINavigationBar.appearance().standardAppearance = appearance
