@@ -8,7 +8,7 @@ protocol MessageListPresentation: AnyObject {
 
 @MainActor final class MessageListPresenter: MessageListPresentation{
     func directMessageListCellDidTap(id: UUID) {
-        router.presetDirectMessageView(directMessageID: id)
+        router.presentDirectMessageView(directMessageID: id)
     }
     
     func refreshControlViewDidAppear() {
