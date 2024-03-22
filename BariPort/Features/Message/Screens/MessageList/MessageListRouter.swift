@@ -2,7 +2,7 @@ import UIKit
 import Foundation
 
 protocol MessageListWireframe: AnyObject{
-    func presetDirectMessageView(directMessageID: UUID)
+    func presetDirectMessageView(chatRoomID: String)
 }
 
 final class MessageListRouter: MessageListWireframe{
@@ -34,7 +34,8 @@ final class MessageListRouter: MessageListWireframe{
         )
     }
     
-    @MainActor func presetDirectMessageView(directMessageID: UUID) {
+    @MainActor func presetDirectMessageView(chatRoomID: String) {
+        // ID渡す
         self.viewController.navigationController?.pushViewController(DirectMessageRouter.assembleModules(), animated: true)
     }
 }

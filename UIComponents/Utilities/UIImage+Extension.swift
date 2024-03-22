@@ -18,7 +18,7 @@ public extension UIImage{
             let data = try Data(contentsOf: url)
             self.init(data: data)!
             return
-        } catch let err {
+        } catch _ {
             // TODO: Error handling
         }
         self.init()
