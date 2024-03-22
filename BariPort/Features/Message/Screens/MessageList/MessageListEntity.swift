@@ -4,13 +4,13 @@ import UIComponents
 
 struct MessageListEntity{
     struct Cell: DirectMessageListTableViewDataframe{
-        var id: UUID
+        var id: String
         var summary: String
         var productName: String
         var companyName: String
         var imageURL: URL?
         
-        init(id: UUID, summary: String, productName: String, companyName: String, imageURL: URL? = nil) {
+        init(id: String, summary: String, productName: String, companyName: String, imageURL: URL? = nil) {
             self.id = id
             self.summary = summary
             self.productName = productName

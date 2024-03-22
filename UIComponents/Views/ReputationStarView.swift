@@ -92,7 +92,7 @@ public class ReputationStarView: UIView{
     
     func generateStarViews(fill: Bool, size: CGFloat) -> [UIImageView]{
         var views: [UIImageView] = []
-        for index in 0..<ReputationStarView.starNumber{
+        for _ in 0..<ReputationStarView.starNumber{
             let image = (fill ? UIImage.Common.StarFill : UIImage.Common.Star)
             let resizeImage = image.resize(size: CGSize(width: size, height: size)) ?? image
             let view = UIImageView(image: resizeImage.withRenderingMode(.alwaysTemplate))

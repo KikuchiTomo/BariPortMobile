@@ -5,7 +5,7 @@ protocol SupportListPresentation: AnyObject {
     var dataSource: SupportListDataSource { get }
 }
 
-@MainActor final class SupportListPresenter: SupportListPresentation{
+final class SupportListPresenter: SupportListPresentation{
     private weak var view: SupportListView?
     private let router: SupportListWireframe
     private let interactor: SupportListUsecase
@@ -19,7 +19,7 @@ protocol SupportListPresentation: AnyObject {
         self.view = view
         self.router = router
         self.interactor = interactor
-        self.dataSource = .init()
+        self.dataSource = .init()        
     }
 }
 

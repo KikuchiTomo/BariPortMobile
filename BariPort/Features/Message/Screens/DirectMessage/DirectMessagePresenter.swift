@@ -5,7 +5,7 @@ protocol DirectMessagePresentation: AnyObject {
     var dataSource: DirectMessageDataSource { get }
 }
 
-@MainActor final class DirectMessagePresenter: DirectMessagePresentation{
+final class DirectMessagePresenter: DirectMessagePresentation{
     private weak var view: DirectMessageView?
     private let router: DirectMessageWireframe
     private let interactor: DirectMessageUsecase
@@ -21,6 +21,13 @@ protocol DirectMessagePresentation: AnyObject {
         self.interactor = interactor    
         
         self.dataSource = .init()
+        
+        Task{
+            do{
+                let result = try await self.interactor.fetchHello()
+                print(result)
+            }
+        }
     }
 }
 

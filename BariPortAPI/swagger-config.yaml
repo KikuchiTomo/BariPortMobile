@@ -22,7 +22,7 @@ components:
           type: "string"
         apiKey:
           type: "string"
-    chat_room_participants:
+    ChatRoomParticipants:
       type: "object"
       properties:
         id:
@@ -31,7 +31,7 @@ components:
           type: "string" # BEGIN: userId type
         chatRoomId:
           type: "string" # BEGIN: chatRoomId type
-    chat_rooms:
+    ChatRooms:
       type: "object"
       properties:
         id:
@@ -42,7 +42,7 @@ components:
           type: "string" # BEGIN: type type
         projectId:
           type: "string" # BEGIN: projectId type
-    messages:
+    MessagesGet:
       type: "object"
       properties:
         id:
@@ -53,46 +53,61 @@ components:
           type: "string" # BEGIN: chatRoomId type
         text:
           type: "string" # BEGIN: text type
-    reviews:
+    MessagesPost:
+      type: "object"
+      properties:
+        userId: 
+          type: "string"
+        chatRoomId:
+          type: "string"
+        text: 
+          type: "string"
+        sendAt:
+          type: "string"
+    Reviews:
       type: "object"
       properties:
         id:
           type: "string" # BEGIN: id type
-        companyId:
-          type: "string" # BEGIN: companyId type
+        company:
+          type: "object"
+          properties:
+            name:
+              type: "string"
         userId:
           type: "string" # BEGIN: userId type
         evaluationScore:
           type: "integer"
         description:
           type: "string"
-    companies:
+        sendAt:
+          type: "string"          
+    Company:
       type: "object"
       properties:
         id:
           type: "string" # BEGIN: id type
         name:
-          type: "string"
-    projects:
+          type: "string"    
+    Projects:
       type: "object"
       properties:
         id:
-          type: "string" # BEGIN: id type
-        companyId:
-          type: "string" # BEGIN: companyId type
+          type: "string" # BEGIN: id type        
         name:
           type: "string"
         description:
           type: "string"
-
-security:
-  - identity_server_auth:
-      - api
+        company:
+          $ref: "#/components/schemas/Company"
+#security:
+#  - identity_server_auth:
+#    - api
 paths:
   /projects/list:
     get:
       tags:
-        - "projects"
+        - "V1"
       summary: "プロジェクト一覧取得"
       description: "プロジェクト一覧を取得します。"
       operationId: "getProjects"
@@ -104,21 +119,7 @@ paths:
               schema:
                 type: "array"
                 items:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string" # BEGIN: id type
-                    name:
-                      type: "string"
-                    description:
-                      type: "string"
-                    company:
-                      type: "object"
-                      properties:
-                        id:
-                          type: "string" # BEGIN: id type
-                        name:
-                          type: "string"
+                  $ref: "#/components/schemas/Projects"
         "404":
           description: "プロジェクトが存在しません。"
         "500":
@@ -126,7 +127,7 @@ paths:
   /chat_room_participants:
     post:
       tags:
-        - "chat_room_participants"
+        - "V1"
       summary: "チャットルーム参加登録"
       description: "チャットルームの参加を登録します。"
       operationId: "postChatRoomParticipants"
@@ -159,7 +160,7 @@ paths:
   /chat_room:
     get:
       tags:
-        - "chat_rooms"
+        - "V1"
       summary: "チャットルーム情報取得"
       description: "チャットルーム情報を取得します。"
       operationId: "getChatRooms"
@@ -177,7 +178,7 @@ paths:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/chat_rooms"
+                  $ref: "#/components/schemas/ChatRooms"
         "400":
           description: "projectIdが渡されていないか、不正です。"
         "404":
@@ -187,7 +188,7 @@ paths:
   /messages:
     get:
       tags:
-        - "messages"
+       - "V1"
       summary: "メッセージ一覧取得"
       description: "メッセージ一覧を取得します。"
       operationId: "getMessages"
@@ -205,7 +206,7 @@ paths:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/messages"
+                  $ref: "#/components/schemas/MessagesGet"
         "400":
           description: "chatRoomIdが渡されていないか、不正です。"
         "404":
@@ -215,7 +216,7 @@ paths:
   /message:
     post:
       tags:
-        - "messages"
+        - "V1"
       summary: "メッセージ投稿"
       description: "メッセージを投稿します。"
       operationId: "postMessage"
@@ -224,16 +225,7 @@ paths:
         content:
           application/json:
             schema:
-              type: "object"
-              properties:
-                userId:
-                  type: "string" # BEGIN: userId type
-                chatRoomId:
-                  type: "string" # BEGIN: chatRoomId type
-                text:
-                  type: "string"
-                sendAt:
-                  type: "string"
+              $ref: "#/components/schemas/MessagesPost"
       responses:
         "201":
           description: "成功"
@@ -244,7 +236,7 @@ paths:
   /reviews/list:
     get:
       tags:
-        - "reviews"
+        - "V1"
       summary: "レビュー一覧取得"
       description: "レビュー一覧を取得します。"
       operationId: "getReviews"
@@ -256,23 +248,8 @@ paths:
               schema:
                 type: "array"
                 items:
-                  type: "object"
-                  properties:
-                    id:
-                      type: "string" # BEGIN: id type
-                    company:
-                      type: "object"
-                      properties:
-                        name:
-                          type: "string"
-                    userId:
-                      type: "string" # BEGIN: userId type
-                    evaluationScore:
-                      type: "integer"
-                    description:
-                      type: "string"
-                    sendAt:
-                      type: "string"
+                  $ref: "#/components/schemas/Reviews"
+                  
         "404":
           description: "レビューが存在しません。"
         "500":
@@ -280,7 +257,7 @@ paths:
   /hello:
     get:
       tags:
-        - "hello"
+        - "V1"
       summary: "テストAPI"
       description: "テスト用のAPIです"
       operationId: "hello"
@@ -290,10 +267,7 @@ paths:
           content:
             application/json:
               schema:
-                type: "object"
-                properties:
-                  message:
-                    type: "string" # BEGIN: userId type
+                $ref: "#/components/schemas/Hello"
         "400":
           description: "error 400"
         "404":

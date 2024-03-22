@@ -16,7 +16,7 @@ open class MessagesAPI {
      - parameter chatRoomId: (query)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getMessages(chatRoomId: String, completion: @escaping ((_ data: [Messages]?,_ error: Error?) -> Void)) {
+    open class func getMessages(chatRoomId: String, completion: @escaping ((_ data: [MessagesGet]?,_ error: Error?) -> Void)) {
         getMessagesWithRequestBuilder(chatRoomId: chatRoomId).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
@@ -40,9 +40,9 @@ open class MessagesAPI {
 } ]}]
      - parameter chatRoomId: (query)  
 
-     - returns: RequestBuilder<[Messages]> 
+     - returns: RequestBuilder<[MessagesGet]> 
      */
-    open class func getMessagesWithRequestBuilder(chatRoomId: String) -> RequestBuilder<[Messages]> {
+    open class func getMessagesWithRequestBuilder(chatRoomId: String) -> RequestBuilder<[MessagesGet]> {
         let path = "/messages"
         let URLString = SwaggerClientAPI.basePath + path
         let parameters: [String:Any]? = nil
@@ -52,44 +52,8 @@ open class MessagesAPI {
         ])
 
 
-        let requestBuilder: RequestBuilder<[Messages]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
+        let requestBuilder: RequestBuilder<[MessagesGet]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
-    }
-    /**
-     メッセージ投稿
-
-     - parameter body: (body)  
-     - parameter completion: completion handler to receive the data and the error objects
-     */
-    open class func postMessage(body: MessageBody, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        postMessageWithRequestBuilder(body: body).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
-                completion(nil, error)
-            }
-        }
-    }
-
-
-    /**
-     メッセージ投稿
-     - POST /message
-
-     - parameter body: (body)  
-
-     - returns: RequestBuilder<Void> 
-     */
-    open class func postMessageWithRequestBuilder(body: MessageBody) -> RequestBuilder<Void> {
-        let path = "/message"
-        let URLString = SwaggerClientAPI.basePath + path
-        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
-        let url = URLComponents(string: URLString)
-
-
-        let requestBuilder: RequestBuilder<Void>.Type = SwaggerClientAPI.requestBuilderFactory.getNonDecodableBuilder()
-
-        return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
 }

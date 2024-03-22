@@ -12,22 +12,22 @@ import Foundation
 public struct Projects: Codable {
 
     public var _id: String?
-    public var companyId: String?
     public var name: String?
     public var _description: String?
+    public var company: Company?
 
-    public init(_id: String? = nil, companyId: String? = nil, name: String? = nil, _description: String? = nil) {
+    public init(_id: String? = nil, name: String? = nil, _description: String? = nil, company: Company? = nil) {
         self._id = _id
-        self.companyId = companyId
         self.name = name
         self._description = _description
+        self.company = company
     }
 
     public enum CodingKeys: String, CodingKey { 
         case _id = "id"
-        case companyId
         case name
         case _description = "description"
+        case company
     }
 
 }

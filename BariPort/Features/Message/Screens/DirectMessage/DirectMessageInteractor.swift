@@ -5,15 +5,22 @@ protocol DirectMessageUsecase: AnyObject {
     
     // example
     // このAPIがどこからとってきたものなのかは気にしない. そのため返す方はEntityで定義されたものに変換する
-    func getHello() async throws -> DirectMessageEntity.Hello?
+    func fetchHello() async throws -> DirectMessageEntity.Hello?
+    func fetchMessages(chatRoomID: String) async throws -> [DirectMessageEntity.Message]
 }
 
 final class DirectMessageInteractor: DirectMessageUsecase{
     init(){}
         
-    func getHello() async throws -> DirectMessageEntity.Hello? {
-        let result = try await BariPortAPIClient.shared.getHello()
+    func fetchHello() async throws -> DirectMessageEntity.Hello? {
+        let result = try await BariPortAPIClient.getHello()
         return result.convert()
+    }
+    
+    func fetchMessages(chatRoomID: String) async throws -> [DirectMessageEntity.Message] {
+        return try await BariPortAPIClient.getMessages(chatRoomID: chatRoomID).map{
+            $0.convert()
+        }
     }
 }
 
@@ -24,10 +31,24 @@ extension BariPortAPI.Hello{
     }
 }
 
+extension BariPortAPI.MessagesGet{
+    func convert() -> DirectMessageEntity.Message{
+        // TODO: これもなんか定義がおかしい. yamlが間違っている気がする　なるはやで直したい🖊️🍍🍎🖊️
+        .init(
+            userName: "",
+            receivedAt: Date.now,
+            userType: .me,
+            userIconURL: nil,
+            body: self.text ?? "")
+    }
+}
+
 final class MockDirectMessageInteractor: DirectMessageUsecase{
-    func getHello() async throws -> DirectMessageEntity.Hello? {
+    func fetchHello() async throws -> DirectMessageEntity.Hello? {
         nil
     }
     
-
+    func fetchMessages(chatRoomID: String) async throws -> [DirectMessageEntity.Message] {
+        []
+    }
 }

@@ -88,8 +88,9 @@ class MessageListViewController: UIViewController, UITableViewDelegate, UITableV
         let reuseCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         ?? DirectMessageListTableCell<MessageListEntity.Cell>.init(reuseIdentifier: cellIdentifier)
         
+        // TODO: DirectMessageListTableCellではnilを許容してその旨を表示できるようにすべき
         if let listCell = reuseCell as? DirectMessageListTableCell<MessageListEntity.Cell>{
-            listCell.updateContent(content: message ?? .init(id: UUID(), summary: "", productName: "", companyName: ""))
+            listCell.updateContent(content: message ?? .init(id: UUID().uuidString, summary: "", productName: "", companyName: ""))
         }
                
         return reuseCell
