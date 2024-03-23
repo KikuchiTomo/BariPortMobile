@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import UIComponents
 
 struct DirectMessageEntity{
@@ -7,7 +8,7 @@ struct DirectMessageEntity{
         var receivedAt: Date
         var userType: UIComponents.DirectMessageCellUserType
         var userIcon: UIImage?
-        var body: String                
+        var body: String
     }
     
     struct Hello{
