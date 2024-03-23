@@ -14,6 +14,8 @@ class ProjectListDataSource: NSObject, UITableViewDataSource{
     
     internal var initialized: Bool = false
     
+    internal var presenter: ProjectListPresentation? = nil
+    
     func updateData(items: [ProjectListEntity.Cell]) {
         self.dataSource.removeAll()
         self.dataSource.append(items)
@@ -38,7 +40,10 @@ class ProjectListDataSource: NSObject, UITableViewDataSource{
             // TODO: メッセージが取り出すことができなかった時のUIを用意して, nilが渡されたら再送できるようにする
             listCell.updateContent(
                 content: message ??
-                    .init(projectName: "", companyName: "", comment: ""))
+                    .init(id: "", projectName: "", companyName: "", comment: ""))
+            listCell.viewDidTapDirectMessage = { id in
+                self.presenter?.viewDidTapDM()
+            }
         }
                
         return reuseCell

@@ -4,6 +4,7 @@ import Foundation
 protocol ProjectListPresentation: AnyObject {
     var dataSource: ProjectListDataSource { get }
     
+    func viewDidTapDM()
     func viewDidAppear()
     func viewWillRefresh()
 }
@@ -23,6 +24,11 @@ protocol ProjectListPresentation: AnyObject {
         self.router = router
         self.interactor = interactor
         self.dataSource = .init()
+        self.dataSource.presenter = self
+    }
+    
+    func viewDidTapDM(){
+        Switcher.shared.tabSwitch(to: 1)
     }
     
     func viewDidAppear(){
@@ -52,7 +58,16 @@ protocol ProjectListPresentation: AnyObject {
 }
 
 final class MockProjectListPresenter: ProjectListPresentation{
-    var dataSource: ProjectListDataSource = .init()
+    func viewDidTapDM() {
+        
+    }
+    
+    var dataSource: ProjectListDataSource
+    
+    init() {
+        dataSource = .init()
+        dataSource.presenter = self
+    }
     
     func viewDidAppear() {
         
