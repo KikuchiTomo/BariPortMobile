@@ -34,6 +34,8 @@ class SupportListViewController: UIViewController, UITableViewDelegate{
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: containerView)
         self.view.backgroundColor = .white
         
+        self.registerActionButton(button: self.headerView.supportLinkButton)
+        
         self.configViews()
     }
     
@@ -52,6 +54,15 @@ class SupportListViewController: UIViewController, UITableViewDelegate{
 }
 
 extension SupportListViewController{
+    func registerActionButton(button: UIButton){
+        button.addTarget(self, action: #selector(viewDidTapSupportDetailButton(_:)), for: .touchUpInside)
+    }
+    
+    @objc func viewDidTapSupportDetailButton(_ sender: UIButton){
+        // https://it-saiyou-kitaq.com/
+        self.presenter.supportDetailButtonDidTap()
+    }
+    
     func generateTableView() -> UITableView{
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false

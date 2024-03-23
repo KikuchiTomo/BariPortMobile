@@ -12,7 +12,7 @@ public class SupportSummaryView: UIView{
     private lazy var reputationStarView: ReputationStarView = generateReputationView()
     private lazy var reputationValueView: UILabel = generateReputationValueView()
     private lazy var reputationLabelView: UILabel = generateReputationLabelView()
-    private lazy var supportLinkButton: SupportButton = generateSupportButton()
+    private (set) public lazy var supportLinkButton: SupportButton = generateSupportButton()
     private lazy var labelGuide: UILayoutGuide = UILayoutGuide()
     
     public var value: Float = 0.0{

@@ -1,7 +1,7 @@
 import UIKit
 import Foundation
 
-protocol {{screen}}Wireframe: AnyObject{
+protocol {{screen}}Wireframe: RootRouter, AnyObject{
 
 }
 

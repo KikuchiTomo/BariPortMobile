@@ -2,12 +2,12 @@ import UIKit
 import Foundation
 import UIComponents
 
-protocol ProjectListWireframe: AnyObject{
+protocol ProjectListWireframe: RootRouter, AnyObject{
 
 }
 
 final class ProjectListRouter: ProjectListWireframe{
-    private unowned let viewController: UIViewController
+    internal unowned let viewController: UIViewController
 
     private init(viewController: UIViewController){
         self.viewController = viewController

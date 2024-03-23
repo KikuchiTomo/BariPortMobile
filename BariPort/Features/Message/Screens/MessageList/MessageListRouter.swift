@@ -1,12 +1,12 @@
 import UIKit
 import Foundation
 
-protocol MessageListWireframe: AnyObject{
+protocol MessageListWireframe: RootRouter, AnyObject{
     func presetDirectMessageView(chatRoomID: String)
 }
 
 final class MessageListRouter: MessageListWireframe{
-    private unowned let viewController: UIViewController
+    internal unowned let viewController: UIViewController
 
     private init(viewController: UIViewController){
         self.viewController = viewController

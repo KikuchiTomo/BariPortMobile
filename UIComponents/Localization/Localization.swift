@@ -17,6 +17,8 @@ public enum LocalizationString: String{
     case checkSupportDetailButtonLabel
     case reputationFromCorporationsLabel
     case supportListReputationLabel
+    case alertCancel
+    case alertOK
     
     public var localized: String{
         get {
