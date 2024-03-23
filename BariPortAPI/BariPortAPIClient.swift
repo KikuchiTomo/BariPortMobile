@@ -64,22 +64,17 @@ public class BariPortAPIClient{
     }
     
     public static func postChatRoomParticipants(
-        name: String,
-        description: String,
-        companyName: String) async throws {
+        chatRoomId: String,
+        userId: String) async throws -> Result {
         return try await withCheckedThrowingContinuation{ config in
-            // TODO: なんかおかしい!?!?!?. yamlが間違っている可能性大かも？！？！？
-            // チャットルームへの参加にUserIDないのはなんかおかしい気がする
-            V1API.postChatRoomParticipants(
-                body: .init(
-                    chatRooom:
-                            .init(name: name,
-                                  _description: name,
-                                  company:
-                                    .init(
-                                        name: companyName)
-                                 ))
-            ){ data, error in
+            V1API.postChatRoomParticipants(body:
+                    .init(
+                        _id: UUID().uuidString,
+                        chatRoomId: chatRoomId,
+                        userId: userId
+                    )
+            )
+            { data, error in
                 U().withUnwrapOptional(data, error, config)
             }
         }
@@ -88,17 +83,19 @@ public class BariPortAPIClient{
     public static func postMessage(
         userID: String,
         chatRoomID: String,
-        message: String,
-        sendAt: Date) async throws {
+        companyID: String,
+        message: String) async throws -> Result {
         // TODO: SendAtの形式がわからないので聞く
         // UTCなのかどうか, YYYY-MM-DD'T'HH:mm:ss.SSSZZZZZ なのかどうか
         return try await withCheckedThrowingContinuation{ config in
             V1API.postMessage(
                 body: .init(
+                    _id: UUID().uuidString,
                     userId: userID,
+                    companyId: companyID,
                     chatRoomId: chatRoomID,
                     text: message,
-                    sendAt: sendAt.bariPortFormatString()
+                    imgUrl: ""
                 )
             ){ data, error in
                 U().withUnwrapOptional(data, error, config)

@@ -229,13 +229,9 @@ open class V1API {
      - parameter body: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func postChatRoomParticipants(body: ChatRoomParticipantsBody, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+    open class func postChatRoomParticipants(body: ChatRoomParticipantsBody, completion: @escaping ((_ data: Result?,_ error: Error?) -> Void)) {
         postChatRoomParticipantsWithRequestBuilder(body: body).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
-                completion(nil, error)
-            }
+            completion(response?.body, error)
         }
     }
 
@@ -244,18 +240,21 @@ open class V1API {
      チャットルーム参加登録
      - POST /chat_room_participants
 
+     - examples: [{contentType=application/json, example={
+  "message" : "message"
+}}]
      - parameter body: (body)  
 
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<Result> 
      */
-    open class func postChatRoomParticipantsWithRequestBuilder(body: ChatRoomParticipantsBody) -> RequestBuilder<Void> {
+    open class func postChatRoomParticipantsWithRequestBuilder(body: ChatRoomParticipantsBody) -> RequestBuilder<Result> {
         let path = "/chat_room_participants"
         let URLString = SwaggerClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
         let url = URLComponents(string: URLString)
 
 
-        let requestBuilder: RequestBuilder<Void>.Type = SwaggerClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let requestBuilder: RequestBuilder<Result>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
@@ -265,13 +264,9 @@ open class V1API {
      - parameter body: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func postMessage(body: MessagesPost, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+    open class func postMessage(body: MessagesPost, completion: @escaping ((_ data: Result?,_ error: Error?) -> Void)) {
         postMessageWithRequestBuilder(body: body).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
-                completion(nil, error)
-            }
+            completion(response?.body, error)
         }
     }
 
@@ -280,18 +275,21 @@ open class V1API {
      メッセージ投稿
      - POST /message
 
+     - examples: [{contentType=application/json, example={
+  "message" : "message"
+}}]
      - parameter body: (body)  
 
-     - returns: RequestBuilder<Void> 
+     - returns: RequestBuilder<Result> 
      */
-    open class func postMessageWithRequestBuilder(body: MessagesPost) -> RequestBuilder<Void> {
+    open class func postMessageWithRequestBuilder(body: MessagesPost) -> RequestBuilder<Result> {
         let path = "/message"
         let URLString = SwaggerClientAPI.basePath + path
         let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
         let url = URLComponents(string: URLString)
 
 
-        let requestBuilder: RequestBuilder<Void>.Type = SwaggerClientAPI.requestBuilderFactory.getNonDecodableBuilder()
+        let requestBuilder: RequestBuilder<Result>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
 
         return requestBuilder.init(method: "POST", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
