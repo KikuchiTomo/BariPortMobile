@@ -12,7 +12,7 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
     private lazy var tableView: UITableView = generateTableView()
     private lazy var gradationView: GradationView = generateGradationView()
     private lazy var downloadButtonView: AppDownloadButton = generateButton()
-    private let inputFormView = InputFormView()
+    private lazy var inputFormView: InputFormView = generateInputFormButton()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,18 +65,21 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
         self.tableView.separatorStyle = .none
     }
     
+    func generateInputFormButton() -> InputFormView{
+        let view = InputFormView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
+    
     private func setupInputFormView() {
         guard let tabBarHeight = self.tabBarController?.tabBar.frame.size.height else { return }
         
         view.addSubview(inputFormView)
-        
-        // Auto Layoutの設定
-        inputFormView.translatesAutoresizingMaskIntoConstraints = false
+               
         NSLayoutConstraint.activate([
             inputFormView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -tabBarHeight),
             inputFormView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            inputFormView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            inputFormView.heightAnchor.constraint(equalToConstant: 50) // 高さを指定
+            inputFormView.trailingAnchor.constraint(equalTo: view.trailingAnchor),            
         ])
     }
     
@@ -101,7 +104,7 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
             gradationView.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
-    
+        
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // TODO: imp
     }
