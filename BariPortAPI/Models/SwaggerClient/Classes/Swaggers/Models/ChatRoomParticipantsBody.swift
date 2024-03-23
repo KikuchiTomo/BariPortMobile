@@ -11,11 +11,20 @@ import Foundation
 
 public struct ChatRoomParticipantsBody: Codable {
 
-    public var chatRooom: ChatRoomParticipantsChatRooom?
+    public var _id: String?
+    public var chatRoomId: String?
+    public var userId: String?
 
-    public init(chatRooom: ChatRoomParticipantsChatRooom? = nil) {
-        self.chatRooom = chatRooom
+    public init(_id: String? = nil, chatRoomId: String? = nil, userId: String? = nil) {
+        self._id = _id
+        self.chatRoomId = chatRoomId
+        self.userId = userId
     }
 
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case chatRoomId
+        case userId
+    }
 
 }

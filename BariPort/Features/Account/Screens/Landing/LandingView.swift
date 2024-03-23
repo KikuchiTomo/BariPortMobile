@@ -1,5 +1,6 @@
 import UIKit
 import Foundation
+import UIComponents
 
 protocol LandingView: AnyObject{
 
@@ -11,13 +12,16 @@ class LandingViewController: UIViewController{
     private lazy var titleLabel: UILabel = generateLabel()
     private lazy var logoView: UIImageView = generateLogoView()
     private lazy var logoLabel: UILabel = generateLabel()
-    private lazy var backView 
+    private lazy var backView: TitleBackView = generateBackView()
 
     private lazy var loginButton: UIButton = generateButton()
     private lazy var signupButton: UIButton = generateButton()
-
+    private lazy var blurView: UIVisualEffectView = generateBlurView()
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()  
+        self.view.backgroundColor = .white
 
         self.addViews()
         self.configSignUpButton()
@@ -34,6 +38,12 @@ class LandingViewController: UIViewController{
 }
 
 extension LandingViewController{
+    func generateBlurView() -> UIVisualEffectView{
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        return blurEffectView
+    }
+    
     func  generateLabel() -> UILabel{
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -54,12 +64,18 @@ extension LandingViewController{
         return view
     }
     
+    func  generateBackView() -> TitleBackView{
+        let view = TitleBackView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+        
+    }
     func configSignUpButton(){
         var config = UIButton.Configuration.filled()
         let container = AttributeContainer([
             .font: UIFont.systemFont(ofSize: 20, weight: .semibold)
         ])
-        config.attributedTitle = AttributedString("Signup", attributes: container)
+        config.attributedTitle = AttributedString( LocalizationString.commonSignup.localized, attributes: container)
         config.buttonSize = .large
         config.baseForegroundColor = .white
         config.baseBackgroundColor = .systemBlue
@@ -75,7 +91,9 @@ extension LandingViewController{
         let container = AttributeContainer([
             .font: UIFont.systemFont(ofSize: 14, weight: .semibold)
         ])
-        config.attributedTitle = AttributedString("もしくはログイン ", attributes: container)
+        config.attributedTitle = AttributedString(
+            LocalizationString.orLogin.localized
+            , attributes: container)
         config.buttonSize = .medium
         config.imagePlacement = .trailing
         config.image = UIImage(systemName: "chevron.right")!
@@ -91,18 +109,25 @@ extension LandingViewController{
     
     func configs(){
         titleLabel.text = "BariPort"
-        titleLabel.font = .systemFont(ofSize: 28, weight: .bold)
+        titleLabel.font = .systemFont(ofSize: 36, weight: .bold)
         titleLabel.textColor = .primary
-        
+                
         logoLabel.text = "北九州市"
         logoLabel.font = .systemFont(ofSize: 16, weight: .bold)
         logoLabel.textColor = .systemBlue
     }
     
     func layout(){
+        blurView.frame = view.frame
+        
         NSLayoutConstraint.activate([
+            backView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            backView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            backView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            backView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            
             signupButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signupButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70),
+            signupButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             signupButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
             loginButton.topAnchor.constraint(equalTo: signupButton.bottomAnchor, constant: 10),
@@ -121,6 +146,8 @@ extension LandingViewController{
     }
     
     func addViews(){
+        self.view.addSubview(backView)
+        self.view.addSubview(blurView)
         self.view.addSubview(titleLabel)
         self.view.addSubview(logoView)
         self.view.addSubview(logoLabel)

@@ -13,7 +13,7 @@ final class RootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .white
         
         guard let contentViewController = contentViewController else{
             return
