@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 public protocol ProjectListTableViewDataframe{
+    var id: String { get }
     var projectName: String { get }
     var companyName: String { get }
     var comment: String { get }
@@ -16,6 +17,8 @@ public protocol ProjectListTableViewDataframe{
 
 public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UITableViewCell{
     private var content: Dataframe?
+    
+    public var viewDidTapDirectMessage: ((_ id: String) -> Void)? = nil
     
     enum LabelStyle{
         case caption
@@ -59,6 +62,7 @@ public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UIT
     
     public init(reuseIdentifier: String){
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        self.contentView.isUserInteractionEnabled = false
         configView()
     }
     
@@ -133,12 +137,25 @@ public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UIT
         self.addSubview(directMessageButton)
         self.addSubview(cornerView)
         
+        // UIViewに隠れるので前に持ってきてますw
+        self.bringSubviewToFront(directMessageButton)
+        self.bringSubviewToFront(testerButton)
+        
         // Configs
         cornerView.layer.masksToBounds = true
         cornerView.layer.cornerRadius = 12
         cornerView.layer.borderWidth = 1
         cornerView.layer.borderColor = UIColor.black.cgColor
+        cornerView.isUserInteractionEnabled = true
         selectionStyle = .none
+        
+        self.directMessageButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
+    }
+    
+    @objc func tapAction() {
+        if let id = content?.id {
+            viewDidTapDirectMessage?(id)
+        }
     }
 }
 

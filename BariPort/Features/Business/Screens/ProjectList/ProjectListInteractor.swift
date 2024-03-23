@@ -19,6 +19,7 @@ extension Projects{
     func convert() -> ProjectListEntity.Cell {
         // TODO: ここでは全てOptionalにして, UIで受信できなかったことを表示すべき
         .init(
+            id: self.chatRoomId ?? "",
             projectName: self.projectName ?? "",
             companyName: self.companyName ?? "",
             comment: self._description ?? "")
