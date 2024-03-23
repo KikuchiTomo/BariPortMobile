@@ -30,6 +30,8 @@ final class TabHostRouter<TabItem: TabHostDataframe>: TabHostWireframe{
         )
 
         view.presenter = presenter
-        return view      
+        Switcher.shared.tabHostViewController = view
+        
+        return view
     }
 }

@@ -11,7 +11,7 @@ protocol TabHostDataframe{
     var tabItem: UITabBarItem { get }
 }
 
-class TabHostViewController<TabItem: TabHostDataframe>: UITabBarController, UITabBarControllerDelegate{
+class TabHostViewController<TabItem: TabHostDataframe>: UITabBarController, UITabBarControllerDelegate {
     var presenter: TabHostPresentation!
     var tabItems: [TabItem]
     
@@ -25,7 +25,8 @@ class TabHostViewController<TabItem: TabHostDataframe>: UITabBarController, UITa
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
+        Switcher.shared.tabHostViewController = self
         setUpScreens()
         configureNavigationBarAppearance()
     }
@@ -73,6 +74,17 @@ extension TabHostViewController{
         }
         
         self.viewControllers = viewControllers
+    }
+}
+
+extension TabHostViewController: TabSwitcher {
+    func tabSwitch(to tab: Int) {
+        if let index = self.viewControllers?.firstIndex(where: { $0.tabBarItem.tag == tab }) {
+            self.selectedIndex = index
+        }
+        if let viewController = self.viewControllers?.first(where: { $0.tabBarItem.tag == tab }) {
+            viewController.show(DirectMessageRouter.assembleModules(), sender: nil)
+        }
     }
 }
 
