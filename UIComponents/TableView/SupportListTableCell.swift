@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public protocol SupportListTableViewDataframe{
-    var imageURL: URL? { get }
+    var image: UIImage? { get }
     var companyName: String { get }
     var comment: String { get }
     var createdAt: Date { get }
@@ -95,8 +95,7 @@ public class SupportListTableCell<Dataframe: SupportListTableViewDataframe>: UIT
         
         self.datetimeLabel.text = df.string(from: content.createdAt)
         
-        if let imageURL = content.imageURL{
-            let image = UIImage(url: imageURL)
+        if let image = content.image{
             self.iconView.image = image
         }else{
             let image = UIImage.Messages.NoImageUser

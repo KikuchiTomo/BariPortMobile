@@ -4,14 +4,14 @@ import UIComponents
 
 struct SupportListEntity{
     struct Cell: SupportListTableViewDataframe{
-        var imageURL: URL?
+        var image: UIImage?
         var companyName: String
         var comment: String
         var createdAt: Date
         var reputationValue: Float
         
-        init(imageURL: URL? = nil, companyName: String, comment: String, createdAt: Date, reputationValue: Float) {
-            self.imageURL = imageURL
+        init(image: UIImage? = nil, companyName: String, comment: String, createdAt: Date, reputationValue: Float) {
+            self.image = image
             self.companyName = companyName
             self.comment = comment
             self.createdAt = createdAt

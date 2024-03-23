@@ -15,6 +15,21 @@ class SupportListDataSource: NSObject, UITableViewDataSource{
     
     internal var initialized: Bool = false
     
+    var totalReputationValue: Float{
+        get{
+            if dataSource.count <= 0 {
+                return 0.0
+            }
+            
+            var value: Float = 0.0
+            dataSource.forEach{
+                value += $0.reputationValue
+            }
+            value /= Float(dataSource.count)
+            return value
+        }
+    }
+    
     func updateData(items: [SupportListEntity.Cell]){
         self.dataSource.removeAll()
         self.dataSource.append(items)

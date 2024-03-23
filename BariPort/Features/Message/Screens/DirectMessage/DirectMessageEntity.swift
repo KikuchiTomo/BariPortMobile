@@ -6,7 +6,7 @@ struct DirectMessageEntity{
         var userName: String
         var receivedAt: Date
         var userType: UIComponents.DirectMessageCellUserType
-        var userIconURL: URL?
+        var userIcon: UIImage?
         var body: String                
     }
     

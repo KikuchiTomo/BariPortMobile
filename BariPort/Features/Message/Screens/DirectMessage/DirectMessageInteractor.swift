@@ -38,7 +38,7 @@ extension BariPortAPI.MessagesGet{
             userName: "",
             receivedAt: Date.now,
             userType: .me,
-            userIconURL: nil,
+            userIcon: nil,
             body: self.text ?? "")
     }
 }

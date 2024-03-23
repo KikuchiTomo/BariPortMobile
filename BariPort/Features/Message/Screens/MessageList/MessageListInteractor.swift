@@ -20,7 +20,9 @@ extension ChatRooms{
             id: self._id ?? UUID().uuidString,
             summary: self.type ?? "",
             productName: self.projectId ?? "",
-            companyName: self.name ?? "")
+            companyName: self.name ?? "",
+            image: nil
+        )
     }
 }
 

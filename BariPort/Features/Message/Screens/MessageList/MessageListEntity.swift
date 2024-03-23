@@ -8,14 +8,14 @@ struct MessageListEntity{
         var summary: String
         var productName: String
         var companyName: String
-        var imageURL: URL?
+        var image: UIImage?
         
-        init(id: String, summary: String, productName: String, companyName: String, imageURL: URL? = nil) {
+        init(id: String, summary: String, productName: String, companyName: String, image: UIImage? = nil) {
             self.id = id
             self.summary = summary
             self.productName = productName
             self.companyName = companyName
-            self.imageURL = imageURL
+            self.image = image
         }
     }
 }
