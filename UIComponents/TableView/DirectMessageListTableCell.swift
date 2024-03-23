@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 public protocol DirectMessageListTableViewDataframe{   
-    var imageURL: URL? { get }
+    var image: UIImage? { get }
     var productName: String { get }
     var companyName: String { get }
     var summary: String { get }
@@ -64,8 +64,7 @@ public class DirectMessageListTableCell<Dataframe: DirectMessageListTableViewDat
         companyLabel.text = content.companyName
         summaryLabel.text = content.summary
         
-        if let imageURL = content.imageURL{
-            let image = UIImage(url: imageURL)
+        if let image = content.image{          
             iconView.image = image
         }else{
             let image = UIImage.Messages.NoImageUser

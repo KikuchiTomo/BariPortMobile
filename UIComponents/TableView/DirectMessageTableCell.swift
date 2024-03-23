@@ -17,7 +17,7 @@ public protocol DirectMessageCellDataframe{
     var userName: String { get }
     var receivedAt: Date { get }
     var userType: DirectMessageCellUserType { get }
-    var userIconURL: URL? { get }
+    var userIcon: UIImage? { get }
     var body: String { get }
 }
 
@@ -57,8 +57,7 @@ public class DirectMessageTableCell<Dataframe: DirectMessageCellDataframe>: UITa
         self.datetimeLabel.text = df.string(from: content.receivedAt)
         
         // Set user icon
-        if let imageURL = content.userIconURL{
-            let image = UIImage(url: imageURL)
+        if let image = content.userIcon{       
             self.userIconView.image = image
         }else{
             let image = UIImage.Messages.NoImageUser

@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import BariPortAPI
 
 protocol SupportListUsecase: AnyObject {
@@ -17,9 +18,11 @@ final class SupportListInteractor: SupportListUsecase{
 
 extension Reviews{
     func convert() -> SupportListEntity.Cell{
-        // TODO: ここでは全てOptionalにして, UIで受信できなかったことを表示すべき
+        // TODO: ここでは全てOptionalにして, UIで受信できなかったことを表示すべき     
+        let url: URL? = URL(string: self.imgUrl ?? "")
+        let img: UIImage? = UIImage(url: url)
         return .init(
-            imageURL: URL(string: self.imgUrl ?? ""),
+            image: img,
             companyName: self.companyName ?? "",
             comment: self._description ?? "",
             createdAt: self.sendAt?.parseFromBariPortFormat() ?? Date.now,

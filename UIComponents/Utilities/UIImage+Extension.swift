@@ -13,7 +13,9 @@ public extension UIImage{
         self.init(named: designed, in: Bundle.current, with: .none)!
     }
     
-    convenience init(url: URL) {
+    convenience init?(url: URL?) {
+        guard let url = url else { return nil }
+        
         do {
             let data = try Data(contentsOf: url)
             self.init(data: data)!

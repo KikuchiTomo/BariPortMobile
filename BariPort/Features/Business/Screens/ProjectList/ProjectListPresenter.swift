@@ -5,7 +5,7 @@ protocol ProjectListPresentation: AnyObject {
     var dataSource: ProjectListDataSource { get }
 }
 
-@MainActor final class ProjectListPresenter: ProjectListPresentation{
+final class ProjectListPresenter: ProjectListPresentation{
     private weak var view: ProjectListView?
     private let router: ProjectListWireframe
     private let interactor: ProjectListUsecase
@@ -19,7 +19,7 @@ protocol ProjectListPresentation: AnyObject {
         self.view = view
         self.router = router
         self.interactor = interactor
-        self.dataSource = .init()
+        self.dataSource = .init()             
     }
 }
 

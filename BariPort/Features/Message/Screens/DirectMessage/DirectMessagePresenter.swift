@@ -20,14 +20,7 @@ final class DirectMessagePresenter: DirectMessagePresentation{
         self.router = router
         self.interactor = interactor    
         
-        self.dataSource = .init()
-        
-        Task{
-            do{
-                let result = try await self.interactor.fetchHello()
-                print(result)
-            }
-        }
+        self.dataSource = .init()              
     }
 }
 

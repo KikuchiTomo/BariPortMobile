@@ -55,7 +55,7 @@ class SupportListViewController: UIViewController, UITableViewDelegate{
         frame.size.height = 150
         self.tableView.tableHeaderView!.frame = frame
         
-        self.headerView.value = 4.4
+        self.headerView.value = 0.0
     }
 }
 
@@ -114,6 +114,7 @@ extension SupportListViewController{
 extension SupportListViewController: SupportListView{
     func viewWillReloadData(){
         self.tableView.reloadData()
+        self.headerView.value = self.presenter.dataSource.totalReputationValue
     }
     
     func viewWillShowLoadingView(){
