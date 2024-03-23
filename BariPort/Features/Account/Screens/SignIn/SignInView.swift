@@ -1,5 +1,6 @@
 import UIKit
 import Foundation
+import CryptoKit
 
 protocol SignInView: AnyObject{
 
@@ -73,7 +74,13 @@ class SignInViewController: UIViewController{
     @objc private func signUpButtonTapped() {
         guard let emailText = emailTextField.text else { return }
         guard let passwordText = passwordTextField.text else { return }
-        if !emailText.isEmpty && passwordText.isEmpty {
+        if !emailText.isEmpty && !passwordText.isEmpty {
+            // TODO: 関数として直す
+            var text = emailText + passwordText
+            var data = text.data(using: .utf8)
+            let hashed = SHA256.hash(data: data!)
+            let hashString = hashed.compactMap { String(format: "%02x", $0) }.joined()
+            AuthenticationManager.shared.userID = hashString
             let tabHost = TabHostRouter.assembleModules([
                 ProjectListRouter.assembleModules(tag: 0),
                 MessageListRouter.assembleModules(tag: 1),
