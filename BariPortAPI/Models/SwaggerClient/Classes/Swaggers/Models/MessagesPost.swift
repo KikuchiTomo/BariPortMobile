@@ -7,21 +7,30 @@
 
 import Foundation
 
-
-
 public struct MessagesPost: Codable {
-
+    public var _id: String?
     public var userId: String?
+    public var companyId: String?
     public var chatRoomId: String?
     public var text: String?
-    public var sendAt: String?
+    public var imgUrl: String?
 
-    public init(userId: String? = nil, chatRoomId: String? = nil, text: String? = nil, sendAt: String? = nil) {
+    public init(_id: String? = nil, userId: String? = nil, companyId: String? = nil, chatRoomId: String? = nil, text: String? = nil, imgUrl: String? = nil) {
+        self._id = _id
         self.userId = userId
+        self.companyId = companyId
         self.chatRoomId = chatRoomId
         self.text = text
-        self.sendAt = sendAt
+        self.imgUrl = imgUrl
     }
 
+    public enum CodingKeys: String, CodingKey { 
+        case _id = "id"
+        case userId
+        case companyId
+        case chatRoomId
+        case text
+        case imgUrl
+    }
 
 }

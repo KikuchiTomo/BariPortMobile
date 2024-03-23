@@ -22,6 +22,11 @@ components:
           type: "string"
         apiKey:
           type: "string"
+    Result:
+      type: "object"
+      properties:
+        message: 
+          type: "string"
     ChatRoomParticipants:
       type: "object"
       properties:
@@ -56,13 +61,17 @@ components:
     MessagesPost:
       type: "object"
       properties:
+        id:
+          type: "string"
         userId: 
+          type: "string"
+        companyId:
           type: "string"
         chatRoomId:
           type: "string"
         text: 
           type: "string"
-        sendAt:
+        imgUrl:
           type: "string"
     Reviews:
       type: "object"
@@ -137,21 +146,19 @@ paths:
             schema:
               type: "object"
               properties:
-                chatRooom:
-                  type: "object"
-                  properties:
-                    name:
-                      type: "string"
-                    description:
-                      type: "string"
-                    company:
-                      type: "object"
-                      properties:
-                        name:
-                          type: "string"
+                id: 
+                  type: "string"
+                chatRoomId: 
+                  type: "string"
+                userId:
+                  type: "string"                  
       responses:
         "201":
           description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
         "400":
           description: "userIdまたはchatRoomIdが渡されていないか、不正です。"
         "500":
@@ -228,6 +235,10 @@ paths:
       responses:
         "201":
           description: "成功"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Result"
         "400":
           description: "userIdまたはchatRoomIdまたはtextが渡されていないか、不正です。"
         "500":
@@ -274,3 +285,4 @@ paths:
         "500":
           description: "error 500"
           
+

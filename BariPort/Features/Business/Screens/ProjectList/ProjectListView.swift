@@ -74,10 +74,14 @@ extension ProjectListViewController: ProjectListView{
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
         ])
+        
         setUpHeader()
     }
     
     func setUpHeader() {
+        self.tableView.isUserInteractionEnabled = true
+        
+        self.tableView.allowsSelection = false
         let headerView = UIView()
         // headerViewの高さを設定
         let headerHeight: CGFloat = 30

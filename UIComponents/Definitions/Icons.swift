@@ -39,6 +39,12 @@ public extension UIImage{
             // TODO: デザインされたアイコンに入れ替える
             // UImage(designed: "{asset name}")
         }
+        
+        public static var Logo: UIImage{
+            UIImage(designed: "kitaq_logo")
+                .resize(size: .init(width: 50, height: 50))!
+                .withRenderingMode(.alwaysTemplate)
+        }
     }
     
     struct Messages{
