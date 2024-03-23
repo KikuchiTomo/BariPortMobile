@@ -3,17 +3,19 @@ import Foundation
 import UIComponents
 
 protocol SupportListView: AnyObject{
-
+    func viewWillReloadData()
+    func viewWillShowLoadingView()
+    func viewWillHideLoadingView()
 }
 
 class SupportListViewController: UIViewController, UITableViewDelegate{
     var presenter: SupportListPresentation!
     
     private lazy var headerView = generateHeaderView()
-    private lazy var tableView = generateTableView()
+    private lazy var tableView = generateTableView() 
         
     override func viewDidLoad() {
-        super.viewDidLoad() 
+        super.viewDidLoad()
         self.title = LocalizationString.supportTabBarItemLabel.localized
         // TODO: 画像にしたほうがいいかも
         let serviceNameLabel = UILabel()
@@ -33,10 +35,14 @@ class SupportListViewController: UIViewController, UITableViewDelegate{
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: containerView)
         self.view.backgroundColor = .white
-        
         self.registerActionButton(button: self.headerView.supportLinkButton)
-        
         self.configViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.showLoading()
+        self.presenter.viewDidAppear()
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,7 +80,7 @@ extension SupportListViewController{
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
-    
+      
     func setupTableView(){
         self.view.addSubview(tableView)
         tableView.delegate = self
@@ -106,5 +112,15 @@ extension SupportListViewController{
 }
 
 extension SupportListViewController: SupportListView{
-
+    func viewWillReloadData(){
+        self.tableView.reloadData()
+    }
+    
+    func viewWillShowLoadingView(){
+        self.showLoading()
+    }
+    
+    func viewWillHideLoadingView(){
+        self.hideLoading()
+    }
 }

@@ -5,6 +5,8 @@ protocol SupportListPresentation: AnyObject {
     var dataSource: SupportListDataSource { get }
     
     func supportDetailButtonDidTap()
+    func viewDidAppear()
+    func viewWillRefresh()
 }
 
 final class SupportListPresenter: SupportListPresentation{
@@ -29,12 +31,46 @@ final class SupportListPresenter: SupportListPresentation{
             self.router.openURL(url: URL(string: "https://it-saiyou-kitaq.com/")!)
         }
     }
+    
+    func viewDidAppear(){
+        fetchReviews()
+    }
+    
+    func viewWillRefresh(){
+        fetchReviews()
+    }
+    
+    fileprivate func fetchReviews(){    
+        Task{
+            do{
+                let result = try await self.interactor.fetchSupportList()
+                
+                Task{ @MainActor in
+                    self.dataSource.updateData(items: result)
+                    self.view?.viewWillReloadData()
+                    self.view?.viewWillHideLoadingView()
+                }
+            }catch let error{
+                Task{ @MainActor in
+                    self.router.presentError(error: error)
+                }
+            }
+        }
+    }
 }
 
 final class MockSupportListPresenter: SupportListPresentation{
     var dataSource: SupportListDataSource = .init()
     
     func supportDetailButtonDidTap(){
+        
+    }
+    
+    func viewDidAppear(){
+        
+    }
+    
+    func viewWillRefresh(){
         
     }
 }

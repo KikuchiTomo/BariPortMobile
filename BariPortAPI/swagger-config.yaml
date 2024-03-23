@@ -69,19 +69,16 @@ components:
       properties:
         id:
           type: "string" # BEGIN: id type
-        company:
-          type: "object"
-          properties:
-            name:
-              type: "string"
-        userId:
-          type: "string" # BEGIN: userId type
+        sendAt:
+          type: "string"  
+        imgUrl:
+          type: "string"   
+        companyName:
+          type: "string"           
         evaluationScore:
           type: "integer"
         description:
-          type: "string"
-        sendAt:
-          type: "string"          
+          type: "string"           
     Company:
       type: "object"
       properties:
@@ -92,14 +89,16 @@ components:
     Projects:
       type: "object"
       properties:
-        id:
+        companyName:
           type: "string" # BEGIN: id type        
-        name:
+        projectName:
           type: "string"
         description:
           type: "string"
-        company:
-          $ref: "#/components/schemas/Company"
+        testUrl:
+          type: "string"
+        chatRoomId: 
+          type: "string"
 #security:
 #  - identity_server_auth:
 #    - api

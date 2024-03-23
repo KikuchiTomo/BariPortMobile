@@ -2,7 +2,7 @@ import UIKit
 import Foundation
 
 protocol SignUpView: AnyObject{
-
+    
 }
 
 class SignUpViewController: UIViewController{

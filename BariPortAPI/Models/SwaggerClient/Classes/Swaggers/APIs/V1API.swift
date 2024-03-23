@@ -119,21 +119,17 @@ open class V1API {
      - GET /projects/list
 
      - examples: [{contentType=application/json, example=[ {
-  "name" : "name",
+  "companyName" : "companyName",
+  "chatRoomId" : "chatRoomId",
   "description" : "description",
-  "company" : {
-    "name" : "name",
-    "id" : "id"
-  },
-  "id" : "id"
+  "testUrl" : "testUrl",
+  "projectName" : "projectName"
 }, {
-  "name" : "name",
+  "companyName" : "companyName",
+  "chatRoomId" : "chatRoomId",
   "description" : "description",
-  "company" : {
-    "name" : "name",
-    "id" : "id"
-  },
-  "id" : "id"
+  "testUrl" : "testUrl",
+  "projectName" : "projectName"
 } ]}]
 
      - returns: RequestBuilder<[Projects]> 
@@ -166,23 +162,19 @@ open class V1API {
      - GET /reviews/list
 
      - examples: [{contentType=application/json, example=[ {
+  "imgUrl" : "imgUrl",
   "evaluationScore" : 0,
+  "companyName" : "companyName",
   "description" : "description",
-  "company" : {
-    "name" : "name"
-  },
   "id" : "id",
-  "sendAt" : "sendAt",
-  "userId" : "userId"
+  "sendAt" : "sendAt"
 }, {
+  "imgUrl" : "imgUrl",
   "evaluationScore" : 0,
+  "companyName" : "companyName",
   "description" : "description",
-  "company" : {
-    "name" : "name"
-  },
   "id" : "id",
-  "sendAt" : "sendAt",
-  "userId" : "userId"
+  "sendAt" : "sendAt"
 } ]}]
 
      - returns: RequestBuilder<[Reviews]> 

@@ -20,6 +20,11 @@ extension RootRouter{
         viewController.present(alert, animated: true)
     }
     
+    public func presentError(error: Error){
+        self.presentAlert(type:
+                .alert("ERROR", "\(error.localizedDescription)", [.ok({ _ in })]))
+    }
+    
     public func openURL(url: URL){
         UIApplication.shared.open(url)
     }
