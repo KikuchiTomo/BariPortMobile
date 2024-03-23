@@ -14,20 +14,32 @@ public struct ChatRooms: Codable {
     public var _id: String?
     public var name: String?
     public var type: String?
-    public var projectId: String?
+    public var projectName: String?
+    public var companyName: String?
+    public var imgUrl: String?
+    public var latestMessage: String?
+    public var latestMessageSendAt: String?
 
-    public init(_id: String? = nil, name: String? = nil, type: String? = nil, projectId: String? = nil) {
+    public init(_id: String? = nil, name: String? = nil, type: String? = nil, projectName: String? = nil, companyName: String? = nil, imgUrl: String? = nil, latestMessage: String? = nil, latestMessageSendAt: String? = nil) {
         self._id = _id
         self.name = name
         self.type = type
-        self.projectId = projectId
+        self.projectName = projectName
+        self.companyName = companyName
+        self.imgUrl = imgUrl
+        self.latestMessage = latestMessage
+        self.latestMessageSendAt = latestMessageSendAt
     }
 
     public enum CodingKeys: String, CodingKey { 
         case _id = "id"
         case name
         case type
-        case projectId
+        case projectName
+        case companyName
+        case imgUrl
+        case latestMessage
+        case latestMessageSendAt
     }
 
 }

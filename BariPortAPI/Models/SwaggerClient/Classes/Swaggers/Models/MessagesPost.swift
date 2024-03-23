@@ -7,7 +7,10 @@
 
 import Foundation
 
+
+
 public struct MessagesPost: Codable {
+
     public var _id: String?
     public var userId: String?
     public var companyId: String?

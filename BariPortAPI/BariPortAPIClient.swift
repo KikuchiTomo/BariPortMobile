@@ -57,7 +57,7 @@ public class BariPortAPIClient{
    
     public static func getChatRooms(projectID: String) async throws -> [ChatRooms]{
         return try await withCheckedThrowingContinuation{ config in
-            V1API.getChatRooms(projectId: projectID){ data, error in
+            V1API.getChatRooms(){ data, error in
                 U().withUnwrapOptional(data, error, config)
             }
         }
@@ -83,16 +83,14 @@ public class BariPortAPIClient{
     public static func postMessage(
         userID: String,
         chatRoomID: String,
-        companyID: String,
         message: String) async throws -> Result {
-        // TODO: SendAtの形式がわからないので聞く
-        // UTCなのかどうか, YYYY-MM-DD'T'HH:mm:ss.SSSZZZZZ なのかどうか
+
         return try await withCheckedThrowingContinuation{ config in
             V1API.postMessage(
                 body: .init(
                     _id: UUID().uuidString,
                     userId: userID,
-                    companyId: companyID,
+                    companyId: UUID().uuidString, // TODO: fix it
                     chatRoomId: chatRoomID,
                     text: message,
                     imgUrl: ""

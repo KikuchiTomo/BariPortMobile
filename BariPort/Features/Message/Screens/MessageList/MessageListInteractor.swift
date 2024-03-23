@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import BariPortAPI
 
 protocol MessageListUsecase: AnyObject {
@@ -15,13 +16,15 @@ final class MessageListInteractor: MessageListUsecase{
 
 extension ChatRooms{
     func convert() -> MessageListEntity.Cell{
-        // TODO: ここもWebAPIから帰ってくる値がよくわからないので聞く
-        .init(
-            id: self._id ?? UUID().uuidString,
-            summary: self.type ?? "",
-            productName: self.projectId ?? "",
-            companyName: self.name ?? "",
-            image: nil
+        let url = URL(string: self.imgUrl ?? "")
+        let image = UIImage(url: url)
+               
+        return .init(
+            id: self._id ?? UUID().uuidString ,
+            summary: self.latestMessage ?? "",
+            productName: self.projectName ?? "",
+            companyName: self.companyName ?? "",
+            image: image
         )
     }
 }

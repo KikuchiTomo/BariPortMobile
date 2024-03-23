@@ -6,6 +6,8 @@ protocol MessageListView: AnyObject{
     func appendedDirectMessageList(_ content: [MessageListEntity.Cell])
     func updateDirectMessageList(_ content: [MessageListEntity.Cell])
     func endRefreshing()
+    func showLoadingView()
+    func hideLoadingView()
 }
 
 class MessageListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
@@ -46,6 +48,12 @@ class MessageListViewController: UIViewController, UITableViewDelegate, UITableV
         addRefreshControl()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.presenter.viewDidAppear()
+    }
+        
     func generateTableView() -> UITableView{
         let view = UITableView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -110,12 +118,22 @@ extension MessageListViewController: MessageListView{
         refreshControl.endRefreshing()
     }
     
+    func showLoadingView(){
+        self.showLoading()
+    }
+    
+    func hideLoadingView(){
+        self.hideLoading()
+    }
+    
     func appendedDirectMessageList(_ content: [MessageListEntity.Cell]) {
         self.dataSource.append(content)
         self.directMessageTableView.reloadData()
     }
     
     func updateDirectMessageList(_ content: [MessageListEntity.Cell]) {
+        // self.showLoadingView()
+        
         self.dataSource.removeAll()
         self.dataSource.append(content)
         self.directMessageTableView.reloadData()

@@ -13,11 +13,10 @@ open class V1API {
     /**
      チャットルーム情報取得
 
-     - parameter projectId: (query)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getChatRooms(projectId: String, completion: @escaping ((_ data: [ChatRooms]?,_ error: Error?) -> Void)) {
-        getChatRoomsWithRequestBuilder(projectId: projectId).execute { (response, error) -> Void in
+    open class func getChatRooms(completion: @escaping ((_ data: [ChatRooms]?,_ error: Error?) -> Void)) {
+        getChatRoomsWithRequestBuilder().execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -25,31 +24,35 @@ open class V1API {
 
     /**
      チャットルーム情報取得
-     - GET /chat_room
+     - GET /chat_rooms/list
 
      - examples: [{contentType=application/json, example=[ {
+  "imgUrl" : "imgUrl",
+  "companyName" : "companyName",
   "name" : "name",
+  "latestMessage" : "latestMessage",
   "id" : "id",
   "type" : "type",
-  "projectId" : "projectId"
+  "projectName" : "projectName",
+  "latestMessageSendAt" : "latestMessageSendAt"
 }, {
+  "imgUrl" : "imgUrl",
+  "companyName" : "companyName",
   "name" : "name",
+  "latestMessage" : "latestMessage",
   "id" : "id",
   "type" : "type",
-  "projectId" : "projectId"
+  "projectName" : "projectName",
+  "latestMessageSendAt" : "latestMessageSendAt"
 } ]}]
-     - parameter projectId: (query)  
 
      - returns: RequestBuilder<[ChatRooms]> 
      */
-    open class func getChatRoomsWithRequestBuilder(projectId: String) -> RequestBuilder<[ChatRooms]> {
-        let path = "/chat_room"
+    open class func getChatRoomsWithRequestBuilder() -> RequestBuilder<[ChatRooms]> {
+        let path = "/chat_rooms/list"
         let URLString = SwaggerClientAPI.basePath + path
         let parameters: [String:Any]? = nil
-        var url = URLComponents(string: URLString)
-        url?.queryItems = APIHelper.mapValuesToQueryItems([
-                        "projectId": projectId
-        ])
+        let url = URLComponents(string: URLString)
 
 
         let requestBuilder: RequestBuilder<[ChatRooms]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()

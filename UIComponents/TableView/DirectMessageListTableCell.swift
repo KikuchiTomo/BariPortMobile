@@ -110,6 +110,9 @@ extension DirectMessageListTableCell{
         addSubview(productLabel)
         addSubview(summaryLabel)
         
+        iconView.layer.masksToBounds = true
+        iconView.layer.cornerRadius = CGFloat(54.0 / 2.0)        
+        
         productLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         companyLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
                

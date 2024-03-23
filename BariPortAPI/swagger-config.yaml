@@ -45,8 +45,16 @@ components:
           type: "string"
         type:
           type: "string" # BEGIN: type type
-        projectId:
+        projectName:
           type: "string" # BEGIN: projectId type
+        companyName: 
+          type: "string"
+        imgUrl: 
+          type: "string"
+        latestMessage:
+          type: "string"
+        latestMessageSendAt:
+          type: "string"
     MessagesGet:
       type: "object"
       properties:
@@ -163,19 +171,13 @@ paths:
           description: "userIdまたはchatRoomIdが渡されていないか、不正です。"
         "500":
           description: "登録中に何らかのエラーが発生しました。"
-  /chat_room:
+  /chat_rooms/list:
     get:
       tags:
         - "V1"
       summary: "チャットルーム情報取得"
       description: "チャットルーム情報を取得します。"
       operationId: "getChatRooms"
-      parameters:
-        - name: "projectId"
-          in: "query"
-          required: true
-          schema:
-            type: "string" # BEGIN: projectId type
       responses:
         "200":
           description: "成功"

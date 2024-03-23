@@ -13,12 +13,14 @@ public protocol ProjectListTableViewDataframe{
     var projectName: String { get }
     var companyName: String { get }
     var comment: String { get }
+    var url: URL{ get }
 }
 
 public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UITableViewCell{
     private var content: Dataframe?
     
     public var viewDidTapDirectMessage: ((_ id: String) -> Void)? = nil
+    public var viewDidTapTester: ((_ url: URL) -> Void)? = nil
     
     enum LabelStyle{
         case caption
@@ -149,14 +151,22 @@ public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UIT
         cornerView.isUserInteractionEnabled = true
         selectionStyle = .none
         
-        self.directMessageButton.addTarget(self, action: #selector(tapAction), for: .touchUpInside)
+        self.directMessageButton.addTarget(self, action: #selector(tapActionDM), for: .touchUpInside)
+        self.testerButton.addTarget(self, action: #selector(tapActionTester), for: .touchUpInside)
     }
     
-    @objc func tapAction() {
+    @objc func tapActionDM() {
         if let id = content?.id {
             viewDidTapDirectMessage?(id)
         }
     }
+    
+    @objc func tapActionTester(){
+        if let url = content?.url{
+            viewDidTapTester?(url)
+        }
+    }
+    
 }
 
 extension ProjectListTableCell{
