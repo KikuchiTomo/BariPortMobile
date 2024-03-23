@@ -1,12 +1,12 @@
 import UIKit
 import Foundation
 
-protocol SignUpWireframe: AnyObject{
+protocol SignUpWireframe: RootRouter, AnyObject{
 
 }
 
 final class SignUpRouter: SignUpWireframe{
-    private unowned let viewController: UIViewController
+    internal unowned let viewController: UIViewController
 
     private init(viewController: UIViewController){
         self.viewController = viewController
@@ -16,7 +16,7 @@ final class SignUpRouter: SignUpWireframe{
         let view = SignUpViewController()
         let router = SignUpRouter(viewController: view)
         let interactor = SignUpInteractor()
-
+        
         let presenter = SignUpPresenter(
           view: view,
           router: router,

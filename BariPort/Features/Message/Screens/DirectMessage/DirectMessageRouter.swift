@@ -1,12 +1,12 @@
 import UIKit
 import Foundation
 
-protocol DirectMessageWireframe: AnyObject{
+protocol DirectMessageWireframe: RootRouter, AnyObject{
 
 }
 
 final class DirectMessageRouter: DirectMessageWireframe{
-    private unowned let viewController: UIViewController
+    internal unowned let viewController: UIViewController
 
     private init(viewController: UIViewController){
         self.viewController = viewController

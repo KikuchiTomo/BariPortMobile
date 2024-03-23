@@ -3,6 +3,8 @@ import Foundation
 
 protocol SupportListPresentation: AnyObject {
     var dataSource: SupportListDataSource { get }
+    
+    func supportDetailButtonDidTap()
 }
 
 final class SupportListPresenter: SupportListPresentation{
@@ -21,10 +23,18 @@ final class SupportListPresenter: SupportListPresentation{
         self.interactor = interactor
         self.dataSource = .init()        
     }
+    
+    func supportDetailButtonDidTap(){
+        Task{ @MainActor in            
+            self.router.openURL(url: URL(string: "https://it-saiyou-kitaq.com/")!)
+        }
+    }
 }
 
 final class MockSupportListPresenter: SupportListPresentation{
     var dataSource: SupportListDataSource = .init()
     
-
+    func supportDetailButtonDidTap(){
+        
+    }
 }

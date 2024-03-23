@@ -1,12 +1,12 @@
 import UIKit
 import Foundation
 
-protocol SupportListWireframe: AnyObject{
+protocol SupportListWireframe: RootRouter, AnyObject{
 
 }
 
 final class SupportListRouter: SupportListWireframe{
-    private unowned let viewController: UIViewController
+    internal unowned let viewController: UIViewController
 
     private init(viewController: UIViewController){
         self.viewController = viewController

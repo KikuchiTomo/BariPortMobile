@@ -1,15 +1,21 @@
 import UIKit
 import Foundation
 
-protocol TabHostWireframe: AnyObject{
+protocol TabHostWireframe: RootRouter, AnyObject{
 
 }
 
 final class TabHostRouter<TabItem: TabHostDataframe>: TabHostWireframe{
-    private unowned let viewController: UIViewController
+ 
+    
+    internal unowned let viewController: UIViewController
 
     private init(viewController: UIViewController){
         self.viewController = viewController
+    }
+    
+    static func assembleModules() -> UIViewController {
+        fatalError("Not implemented")
     }
 
     @MainActor static func assembleModules(_ tabItems: [TabItem]) -> UIViewController{

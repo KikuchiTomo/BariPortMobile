@@ -14,3 +14,5 @@
 "checkSupportDetailButtonLabel"="北九州市からの支援に関する詳細は";
 "reputationFromCorporationsLabel"="北九州市の支援に対する企業の満足度";
 "supportListReputationLabel"="北九州市からの支援に対する評価";
+"alertCancel"="キャンセル";
+"alertOK"="OK";
