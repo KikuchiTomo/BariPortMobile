@@ -18,3 +18,8 @@
 "alertOK"="OK";
 "commonSignup"="Signup";
 "orLogin"="Do you have no account?";
+"commonSignIn"="Signin";
+"commonError"="Error";
+"alertNotAllowEmptyEmail"="Email address has not been entered.";
+"alertNotAllowInvalidEmail"="Email address format is invalid.";
+"alertNotAllowEmptyPassword"="Password has not been entered.";

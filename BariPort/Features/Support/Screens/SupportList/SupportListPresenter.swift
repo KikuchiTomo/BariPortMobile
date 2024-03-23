@@ -7,6 +7,7 @@ protocol SupportListPresentation: AnyObject {
     func supportDetailButtonDidTap()
     func viewDidAppear()
     func viewWillRefresh()
+    func viewDidTapLogout()
 }
 
 final class SupportListPresenter: SupportListPresentation{
@@ -40,7 +41,38 @@ final class SupportListPresenter: SupportListPresentation{
         fetchReviews()
     }
     
-    fileprivate func fetchReviews(){    
+    func viewDidTapLogout(){
+        Task{ @MainActor in
+            // TODO: ここ汚すぎるのでリファクタする
+            // TODO: ローカライズする
+            self.router.presentAlert(type:
+                .alert(
+                    "確認",
+                    "ログアウトしますか？", 
+                    [
+                        .ok({ _ in
+                            Task{
+                                do{
+                                    _ = try await AuthenticationManager.shared.signOut()
+                                    Task{ @MainActor in
+                                        // TODO: ログアウト後の画面
+                                    }
+                                }catch(let error){
+                                    Task{ @MainActor in
+                                        self.router.presentError(error: error)
+                                    }
+                                }
+                            }
+                        }),
+                        .cancel({ _ in
+                            
+                        })
+                    ])            
+            )
+        }
+    }
+    
+    fileprivate func fetchReviews(){
         Task{
             do{
                 let result = try await self.interactor.fetchSupportList()
@@ -71,6 +103,10 @@ final class MockSupportListPresenter: SupportListPresentation{
     }
     
     func viewWillRefresh(){
+        
+    }
+    
+    func viewDidTapLogout(){
         
     }
 }

@@ -27,6 +27,7 @@ class ProjectListViewController: UIViewController, UITableViewDelegate {
         containerView.addSubview(serviceNameLabel)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: containerView)
+        self.setNavRightButton(.init(image: .Common.logout, style: .plain ,target: self, action: #selector(viewDidTapLogout)))
         self.view.backgroundColor = .white
         
         self.configViews()
@@ -78,6 +79,10 @@ extension ProjectListViewController: ProjectListView{
         setUpHeader()
     }
     
+    @objc func viewDidTapLogout(){
+        self.presenter.viewDidTapLogout()
+    }
+    
     func setUpHeader() {
         self.tableView.isUserInteractionEnabled = true
         
@@ -92,7 +97,7 @@ extension ProjectListViewController: ProjectListView{
         titleLabel.text = "北九州市の事業一覧"
         titleLabel.textAlignment = .left
         titleLabel.textColor = .black
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 24) 
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 18) 
         headerView.addSubview(titleLabel)
         
         // Auto Layout制約をtitleLabelに適用
@@ -102,6 +107,7 @@ extension ProjectListViewController: ProjectListView{
             titleLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor)
         ])
+        
         
         tableView.tableHeaderView = headerView
     }

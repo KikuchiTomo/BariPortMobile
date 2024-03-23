@@ -18,3 +18,8 @@
 "alertOK"="OK";
 "commonSignup"="サインアップ";
 "orLogin"="もしくは ログイン ";
+"commonSignIn"="サインイン";
+"commonError"="エラー";
+"alertNotAllowEmptyEmail"="メールアドレスが空です";
+"alertNotAllowInvalidEmail"="メールアドレスの形式が不正です";
+"alertNotAllowEmptyPassword"="パスワードが空です";

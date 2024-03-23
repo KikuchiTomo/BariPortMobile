@@ -19,4 +19,8 @@ public extension UIColor{
     static var secondary: UIColor{
         UIColor(designed: "secondary")
     }
+    
+    static var error: UIColor{
+        UIColor(designed: "error")
+    }
 }
