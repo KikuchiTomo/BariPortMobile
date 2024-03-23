@@ -3,7 +3,7 @@ import Foundation
 import UIComponents
 
 protocol LandingView: AnyObject{
-
+    
 }
 
 class LandingViewController: UIViewController{
@@ -84,6 +84,13 @@ extension LandingViewController{
         signupButton.configuration = config
         signupButton.setTitleShadowColor(.white, for: .normal)
         signupButton.setTitleColor(.white, for: .normal)
+        signupButton.addTarget(self, action: #selector(toSignUp), for: .touchUpInside)
+    }
+    
+    @objc func toSignUp() {
+        let signUpVC = SignUpRouter.assembleModules()
+        signUpVC.modalPresentationStyle = .fullScreen
+        present(signUpVC, animated: true)
     }
     
     func configLoginButton(){

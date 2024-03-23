@@ -13,12 +13,12 @@ class AuthenticationManager{
     
     private init() { }
     
-    public let userID = UUID().uuidString
+    public var userID = UUID().uuidString
     
     enum Status{
         case logined
         case noLogin
     }
     
-    public let state: Status = .logined
+    public var state: Status = .noLogin
 }
