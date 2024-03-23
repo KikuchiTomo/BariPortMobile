@@ -3,7 +3,9 @@ import Foundation
 import UIComponents
 
 protocol ProjectListView: AnyObject{
-
+    func viewWillReloadData()
+    func viewWillShowLoadingView()
+    func viewWillHideLoadingView()
 }
 
 class ProjectListViewController: UIViewController, UITableViewDelegate {
@@ -28,6 +30,12 @@ class ProjectListViewController: UIViewController, UITableViewDelegate {
         self.view.backgroundColor = .white
         
         self.configViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.showLoading()
+        self.presenter.viewDidAppear()
     }
 }
 
@@ -92,5 +100,19 @@ extension ProjectListViewController: ProjectListView{
         ])
         
         tableView.tableHeaderView = headerView
+    }
+}
+
+extension ProjectListViewController: SupportListView{
+    func viewWillReloadData() {
+        self.tableView.reloadData()
+    }
+    
+    func viewWillShowLoadingView() {
+        self.showLoading()
+    }
+    
+    func viewWillHideLoadingView() {
+        self.hideLoading()
     }
 }

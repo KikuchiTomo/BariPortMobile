@@ -10,19 +10,16 @@ import UIComponents
 
 class ProjectListDataSource: NSObject, UITableViewDataSource{
     internal let cellIdentifier: String = UUID().uuidString
+    internal var dataSource: AsyncArray<ProjectListEntity.Cell> = .init([])
     
-    internal var dataSource: AsyncArray<ProjectListEntity.Cell> = .init([
-        .init(
-            projectName: "HogeProject",
-            companyName: "HogeHoge Inc.",
-            comment: "ご覧いただきありがとうございます！弊社では、北九州を詳しくご存じでない方にも、北九州の観光地やグルメを楽しんでいただくためのプロダクト「HOGEHOGE」（ベータ版）をリリースしております！ぜひ下記「アプリを使ってみる」よりアプリをダウンロードしていただき、お使いいただいた感想を「口コミ」にて発信していただけますと励みになります！！"
-        ),
-        .init(
-            projectName: "Project HogePiyo",
-            companyName: "PiyoPiyo Inc.",
-            comment: "ご覧いただきありがとうございます！弊社では、北九州を詳しくご存じでない方にも、北九州の観光地やグルメを楽しんでいただくためのプロダクト「HogePiyo」（ベータ版）をリリースしております！ぜひ下記「アプリを使ってみる」よりアプリをダウンロードしていただき、お使いいただいた感想を「口コミ」にて発信していただけますと励みになります！！"
-        ),
-    ])
+    internal var initialized: Bool = false
+    
+    func updateData(items: [ProjectListEntity.Cell]) {
+        self.dataSource.removeAll()
+        self.dataSource.append(items)
+        
+        initialized = true
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
