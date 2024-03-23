@@ -7,6 +7,7 @@ protocol ProjectListPresentation: AnyObject {
     func viewDidTapDM()
     func viewDidAppear()
     func viewWillRefresh()
+    func viewDidTapTester(_ url: URL)
 }
 
 final class ProjectListPresenter: ProjectListPresentation{
@@ -37,6 +38,12 @@ final class ProjectListPresenter: ProjectListPresentation{
     
     func viewWillRefresh() {
         fetchProjectList()
+    }
+    
+    func viewDidTapTester(_ url: URL){
+        Task{ @MainActor in
+            router.openURL(url: url)
+        }
     }
     
     fileprivate func fetchProjectList() {
@@ -74,6 +81,10 @@ final class MockProjectListPresenter: ProjectListPresentation{
     }
     
     func viewWillRefresh() {
+        
+    }
+    
+    func viewDidTapTester(_ url: URL) {
         
     }
 }

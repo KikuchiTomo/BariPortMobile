@@ -4,6 +4,8 @@ import Foundation
 protocol MessageListPresentation: AnyObject {
     func refreshControlViewDidAppear()
     func directMessageListCellDidTap(id: String)
+    
+    func viewDidAppear()
 }
 
 final class MessageListPresenter: MessageListPresentation{
@@ -12,12 +14,32 @@ final class MessageListPresenter: MessageListPresentation{
     }
     
     func refreshControlViewDidAppear() {
-        Task{ @MainActor in
-            view?.updateDirectMessageList([
-                .init(id: UUID().uuidString,
-                      summary: "実際に使ってみて、日常の課題を解決できている実感ができました！便利です！！", productName: "事業名HOGEHOGE", companyName: "株式会社ABC")
-            ])
-            view?.endRefreshing()
+        fetchDatas()
+    }
+    
+    func viewDidAppear(){
+        fetchDatas()
+    }
+    
+    fileprivate func fetchDatas(){
+        Task{
+            do {
+                Task{ @MainActor in
+                    self.view?.showLoadingView()
+                }
+                
+                let data = try await self.interactor.fetchMessages(projectID: "")
+                Task{ @MainActor in
+                    self.view?.updateDirectMessageList(data)
+                    self.view?.endRefreshing()
+                    self.view?.hideLoadingView()
+                }
+            }catch let error{
+                Task{ @MainActor in
+                    self.view?.endRefreshing()
+                    self.router.presentError(error: error)
+                }
+            }
         }
     }
     
@@ -33,12 +55,7 @@ final class MessageListPresenter: MessageListPresentation{
         self.router = router
         self.interactor = interactor
         
-        view.appendedDirectMessageList([
-            .init(id: UUID().uuidString, summary: "実際に使ってみて、日常の課題を解決できている実感ができました！便利です！！", productName: "事業名HOGEHOGE", companyName: "株式会社ABC"),
-            .init(id: UUID().uuidString, summary: "実際に使ってみて、日常の課題を解決できている実感ができました！便利です！！", productName: "事業名HOGEHOGE", companyName: "株式会社ABCABCABCABC"),
-            .init(id: UUID().uuidString, summary: "実際に使ってみて、日常の課題を解決できている実感ができました！便利です！！", productName: "事業名HOGEHOGEPIYPFUGABAR", companyName: "株式会社ABCABCABCABC"),
-            .init(id: UUID().uuidString, summary: "実際に使ってみて、日常の課題を解決できている実感ができました！便利です！！", productName: "事業名HOGEHOGEPIYPFUGABARPIYOHOGEHOGE", companyName: "株式会社ABCABCABCABC")
-        ])
+        view.appendedDirectMessageList([])
     }
 }
 
@@ -48,6 +65,10 @@ final class MockMessageListPresenter: MessageListPresentation{
     }
     
     func directMessageListCellDidTap(id: String) {
+        
+    }
+    
+    func viewDidAppear(){
         
     }
 }

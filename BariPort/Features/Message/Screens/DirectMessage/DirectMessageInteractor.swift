@@ -7,6 +7,7 @@ protocol DirectMessageUsecase: AnyObject {
     // このAPIがどこからとってきたものなのかは気にしない. そのため返す方はEntityで定義されたものに変換する
     func fetchHello() async throws -> DirectMessageEntity.Hello?
     func fetchMessages(chatRoomID: String) async throws -> [DirectMessageEntity.Message]
+    func postMessage(chatRoomID: String, userID: String, message: String) async throws -> Bool
 }
 
 final class DirectMessageInteractor: DirectMessageUsecase{
@@ -21,6 +22,17 @@ final class DirectMessageInteractor: DirectMessageUsecase{
         return try await BariPortAPIClient.getMessages(chatRoomID: chatRoomID).map{
             $0.convert()
         }
+    }
+    
+    func postMessage(chatRoomID: String, userID: String, message: String) async throws -> Bool{
+        return try await BariPortAPIClient.postMessage(userID: userID, chatRoomID: chatRoomID, message: message).convert()
+    }
+}
+
+extension BariPortAPI.Result{
+    func convert() -> Bool{
+        guard let message = self.message else { return false }
+        return (message == "success")
     }
 }
 
@@ -50,5 +62,9 @@ final class MockDirectMessageInteractor: DirectMessageUsecase{
     
     func fetchMessages(chatRoomID: String) async throws -> [DirectMessageEntity.Message] {
         []
+    }
+    
+    func postMessage(chatRoomID: String, userID: String, message: String) async throws -> Bool{
+        true
     }
 }

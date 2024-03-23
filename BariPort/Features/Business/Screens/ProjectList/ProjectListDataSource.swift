@@ -40,9 +40,12 @@ class ProjectListDataSource: NSObject, UITableViewDataSource{
             // TODO: メッセージが取り出すことができなかった時のUIを用意して, nilが渡されたら再送できるようにする
             listCell.updateContent(
                 content: message ??
-                    .init(id: "", projectName: "", companyName: "", comment: ""))
+                    .init(url: URL(string: "https://www.weblio.jp/content/%E6%BA%96%E5%82%99%E4%B8%AD")!, id: "", projectName: "", companyName: "", comment: ""))
             listCell.viewDidTapDirectMessage = { id in
                 self.presenter?.viewDidTapDM()
+            }
+            listCell.viewDidTapTester = { url in
+                self.presenter?.viewDidTapTester(url)
             }
         }
                
