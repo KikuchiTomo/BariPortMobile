@@ -2,7 +2,7 @@ import UIKit
 import Foundation
 
 protocol SignUpWireframe: RootRouter, AnyObject{
-
+    
 }
 
 final class SignUpRouter: SignUpWireframe{

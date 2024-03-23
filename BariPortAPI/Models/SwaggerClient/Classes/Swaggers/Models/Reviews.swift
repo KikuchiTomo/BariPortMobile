@@ -12,28 +12,28 @@ import Foundation
 public struct Reviews: Codable {
 
     public var _id: String?
-    public var company: ChatRoomParticipantsChatRooomCompany?
-    public var userId: String?
+    public var sendAt: String?
+    public var imgUrl: String?
+    public var companyName: String?
     public var evaluationScore: Int?
     public var _description: String?
-    public var sendAt: String?
 
-    public init(_id: String? = nil, company: ChatRoomParticipantsChatRooomCompany? = nil, userId: String? = nil, evaluationScore: Int? = nil, _description: String? = nil, sendAt: String? = nil) {
+    public init(_id: String? = nil, sendAt: String? = nil, imgUrl: String? = nil, companyName: String? = nil, evaluationScore: Int? = nil, _description: String? = nil) {
         self._id = _id
-        self.company = company
-        self.userId = userId
+        self.sendAt = sendAt
+        self.imgUrl = imgUrl
+        self.companyName = companyName
         self.evaluationScore = evaluationScore
         self._description = _description
-        self.sendAt = sendAt
     }
 
     public enum CodingKeys: String, CodingKey { 
         case _id = "id"
-        case company
-        case userId
+        case sendAt
+        case imgUrl
+        case companyName
         case evaluationScore
         case _description = "description"
-        case sendAt
     }
 
 }

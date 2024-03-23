@@ -11,23 +11,26 @@ import Foundation
 
 public struct Projects: Codable {
 
-    public var _id: String?
-    public var name: String?
+    public var companyName: String?
+    public var projectName: String?
     public var _description: String?
-    public var company: Company?
+    public var testUrl: String?
+    public var chatRoomId: String?
 
-    public init(_id: String? = nil, name: String? = nil, _description: String? = nil, company: Company? = nil) {
-        self._id = _id
-        self.name = name
+    public init(companyName: String? = nil, projectName: String? = nil, _description: String? = nil, testUrl: String? = nil, chatRoomId: String? = nil) {
+        self.companyName = companyName
+        self.projectName = projectName
         self._description = _description
-        self.company = company
+        self.testUrl = testUrl
+        self.chatRoomId = chatRoomId
     }
 
     public enum CodingKeys: String, CodingKey { 
-        case _id = "id"
-        case name
+        case companyName
+        case projectName
         case _description = "description"
-        case company
+        case testUrl
+        case chatRoomId
     }
 
 }
