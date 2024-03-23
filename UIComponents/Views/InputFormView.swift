@@ -8,33 +8,46 @@
 import Foundation
 import UIKit
 
-class InputFormView: UIView {
-    private let textField = UITextField()
+public class InputFormView: UIView, UITextViewDelegate {
+    private let textField = InputFormTextField()
     private let sendButton = UIButton(type: .system) // 送信ボタン
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    public init(){
+        super.init(frame: .zero)
+        addViews()
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
         setupView()
     }
+    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func addViews(){
+        addSubview(textField)
+        addSubview(sendButton)
+    }
+    
     private func setupView() {
-        backgroundColor = .systemCyan // 背景色をsystemCyanに設定
+        backgroundColor = UIColor.secondary
         
         // TextFieldの設定
-        textField.placeholder = "ここに入力"
+        // textField.placeholder = "a"
         textField.backgroundColor = .white // 背景色を白に設定
-        textField.layer.cornerRadius = 8 // 角を丸くする
+        textField.layer.cornerRadius = 18  // 角を丸くする
         textField.layer.masksToBounds = true // 角丸設定を有効に
-        addSubview(textField)
+        textField.dataDetectorTypes = UIDataDetectorTypes.all
+        textField.textContainerInset = InputFormTextField.insets
+        textField.delegate = self
+        textField.isScrollEnabled = false
         
         // Sendボタンの設定
         sendButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal) // 紙飛行機のアイコン
-        sendButton.tintColor = .white
-        addSubview(sendButton)
+        sendButton.tintColor = UIColor.primary
         
         // Auto Layoutの設定
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -45,13 +58,23 @@ class InputFormView: UIView {
             textField.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             textField.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            textField.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -8), // TextFieldの右側をSendボタンに合わせる
+            textField.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -8),
             
             // Sendボタンの制約
-            sendButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            sendButton.topAnchor.constraint(equalTo: topAnchor, constant: 2),
             sendButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             sendButton.widthAnchor.constraint(equalToConstant: 44), // 適当なサイズに調整
             sendButton.heightAnchor.constraint(equalToConstant: 44) // 適当なサイズに調整
         ])
     }
+}
+
+
+fileprivate class InputFormTextField: UITextView{
+    static let topPadding: CGFloat = 9
+    static let bottomPadding: CGFloat = 10
+    static let leftPadding: CGFloat = 14
+    static let rightPadding: CGFloat = 14
+    
+    internal static let insets: UIEdgeInsets = .init(top: topPadding, left: leftPadding, bottom: bottomPadding, right: rightPadding)
 }
