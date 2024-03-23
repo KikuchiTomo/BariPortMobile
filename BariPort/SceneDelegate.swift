@@ -34,11 +34,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func showProperView() -> UIViewController{
         // TODO: ここで最初のViewをどれ見せるか決める (APIは別frameworkとして, 認証しているか聞きに行ってSignUp/SignIn, Homeなどの切り替えを行う)
-        TabHostRouter.assembleModules([
-            ProjectListRouter.assembleModules(tag: 0),
-            MessageListRouter.assembleModules(tag: 1),
-            SupportListRouter.assembleModules(tag: 2)
-        ])
+//        TabHostRouter.assembleModules([
+//            ProjectListRouter.assembleModules(tag: 0),
+//            MessageListRouter.assembleModules(tag: 1),
+//            SupportListRouter.assembleModules(tag: 2)
+//        ])
+        LandingRouter.assembleModules()
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

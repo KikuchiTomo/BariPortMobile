@@ -26,7 +26,7 @@ class TabHostViewController<TabItem: TabHostDataframe>: UITabBarController, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()        
-        setUpScreens()
+        setUpScreens()        
         configureNavigationBarAppearance()
     }
     

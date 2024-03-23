@@ -99,3 +99,6 @@ BariPort/BariPort.xcworkspacedata/
 
 *.xcworkspace/
 *.xcodeproj/
+
+*.mp4
+UIComponents/Resource/kitaQ.mp4

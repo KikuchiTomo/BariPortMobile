@@ -15,5 +15,5 @@ class SignUpViewController: UIViewController{
 }
 
 extension SignUpViewController: SignUpView{
-
+    
 }
