@@ -12,12 +12,14 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
     private lazy var tableView: UITableView = generateTableView()
     private lazy var gradationView: GradationView = generateGradationView()
     private lazy var downloadButtonView: AppDownloadButton = generateButton()
+    private let inputFormView = InputFormView()
         
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         
         self.configViews()
+        self.setupInputFormView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,6 +63,21 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
         self.tableView.delegate = self
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.separatorStyle = .none
+    }
+    
+    private func setupInputFormView() {
+        guard let tabBarHeight = self.tabBarController?.tabBar.frame.size.height else { return }
+        
+        view.addSubview(inputFormView)
+        
+        // Auto Layoutの設定
+        inputFormView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            inputFormView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -tabBarHeight),
+            inputFormView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            inputFormView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            inputFormView.heightAnchor.constraint(equalToConstant: 50) // 高さを指定
+        ])
     }
     
     // safeAreadInsetsはlayout後に大きさが確定
