@@ -102,3 +102,6 @@ BariPort/BariPort.xcworkspacedata/
 
 *.mov
 UIComponents/Resource/kitaQ.mov
+
+BariPort/GoogleService-Info.plist
+GoogleService-Info.plist
