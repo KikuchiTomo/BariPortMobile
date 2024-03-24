@@ -78,12 +78,12 @@ extension TabHostViewController{
 }
 
 extension TabHostViewController: TabSwitcher {
-    func tabSwitch(to tab: Int) {
+    func tabSwitch(to tab: Int, chatRoomID: String) {
         if let index = self.viewControllers?.firstIndex(where: { $0.tabBarItem.tag == tab }) {
             self.selectedIndex = index
         }
         if let viewController = self.viewControllers?.first(where: { $0.tabBarItem.tag == tab }) {
-            viewController.show(DirectMessageRouter.assembleModules(), sender: nil)
+            viewController.show(DirectMessageRouter.assembleModules(chatRoomID: chatRoomID), sender: nil)
         }
     }
 }

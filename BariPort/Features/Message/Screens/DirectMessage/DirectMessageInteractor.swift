@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import BariPortAPI
 
 protocol DirectMessageUsecase: AnyObject {
@@ -6,8 +7,8 @@ protocol DirectMessageUsecase: AnyObject {
     // example
     // このAPIがどこからとってきたものなのかは気にしない. そのため返す方はEntityで定義されたものに変換する
     func fetchHello() async throws -> DirectMessageEntity.Hello?
-    func fetchMessages(chatRoomID: String) async throws -> [DirectMessageEntity.Message]
-    func postMessage(chatRoomID: String, userID: String, message: String) async throws -> Bool
+    func fetchMessages(chatRoomID: String, loginUserId: String) async throws -> [DirectMessageEntity.Message]
+    func postMessage(chatRoomID: String, userID: String, message: String) async throws
 }
 
 final class DirectMessageInteractor: DirectMessageUsecase{
@@ -18,14 +19,15 @@ final class DirectMessageInteractor: DirectMessageUsecase{
         return result.convert()
     }
     
-    func fetchMessages(chatRoomID: String) async throws -> [DirectMessageEntity.Message] {
-        return try await BariPortAPIClient.getMessages(chatRoomID: chatRoomID).map{
+    func fetchMessages(chatRoomID: String, loginUserId: String) async throws -> [DirectMessageEntity.Message] {
+        return try await BariPortAPIClient.getMessages(chatRoomID: chatRoomID, loginUserId: loginUserId).map{
             $0.convert()
         }
     }
     
-    func postMessage(chatRoomID: String, userID: String, message: String) async throws -> Bool{
-        return try await BariPortAPIClient.postMessage(userID: userID, chatRoomID: chatRoomID, message: message).convert()
+    func postMessage(chatRoomID: String, userID: String, message: String) async throws {
+        try await 
+        BariPortAPIClient.postMessage(userID: userID, chatRoomID: chatRoomID, message: message)
     }
 }
 
@@ -46,11 +48,14 @@ extension BariPortAPI.Hello{
 extension BariPortAPI.MessagesGet{
     func convert() -> DirectMessageEntity.Message{
         // TODO: これもなんか定義がおかしい. yamlが間違っている気がする　なるはやで直したい🖊️🍍🍎🖊️
-        .init(
-            userName: "",
-            receivedAt: Date.now,
-            userType: .me,
-            userIcon: nil,
+        let url = URL(string: self.imgUrl ?? "")
+        let image = UIImage.init(url: url)
+        let isMine = self.isMine ?? "false"
+        return .init(
+            userName: self.userName ?? "匿名",
+            receivedAt: self.sendAt?.parseFromBariPortFormat() ?? Date.now,
+            userType: (isMine == "true") ? .me : .other,
+            userIcon: image,
             body: self.text ?? "")
     }
 }
@@ -60,11 +65,11 @@ final class MockDirectMessageInteractor: DirectMessageUsecase{
         nil
     }
     
-    func fetchMessages(chatRoomID: String) async throws -> [DirectMessageEntity.Message] {
+    func fetchMessages(chatRoomID: String, loginUserId: String) async throws -> [DirectMessageEntity.Message] {
         []
     }
     
-    func postMessage(chatRoomID: String, userID: String, message: String) async throws -> Bool{
+    func postMessage(chatRoomID: String, userID: String, message: String) async throws {
         true
     }
 }

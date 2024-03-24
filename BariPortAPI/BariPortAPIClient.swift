@@ -47,9 +47,9 @@ public class BariPortAPIClient{
         }
     }
     
-    public static func getMessages(chatRoomID: String) async throws -> [MessagesGet]{
+    public static func getMessages(chatRoomID: String, loginUserId: String) async throws -> [MessagesGet]{
         return try await withCheckedThrowingContinuation{ config in
-            V1API.getMessages(chatRoomId: chatRoomID){ data, error in
+            V1API.getMessages(chatRoomId: chatRoomID, loginUserId: loginUserId){ data, error in
                 U().withUnwrapOptional(data, error, config)
             }
         }
@@ -57,7 +57,7 @@ public class BariPortAPIClient{
    
     public static func getChatRooms(userId: String) async throws -> [ChatRooms]{
         return try await withCheckedThrowingContinuation{ config in
-            V1API.getChatRooms(body: .init(userId: userId)){ data, error in
+            V1API.getChatRooms(){ data, error in
                 U().withUnwrapOptional(data, error, config)
             }
         }
@@ -83,7 +83,7 @@ public class BariPortAPIClient{
     public static func postMessage(
         userID: String,
         chatRoomID: String,
-        message: String) async throws -> Result {
+        message: String) async throws {
 
         return try await withCheckedThrowingContinuation{ config in
             V1API.postMessage(

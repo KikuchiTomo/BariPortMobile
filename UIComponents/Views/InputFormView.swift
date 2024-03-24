@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 public class InputFormView: UIView, UITextViewDelegate {
-    private let textField = InputFormTextField()
-    private let sendButton = UIButton(type: .system) // 送信ボタン
+    public let textField = InputFormTextField()
+    public let sendButton = UIButton(type: .system) // 送信ボタン
     
     public init(){
         super.init(frame: .zero)
@@ -70,7 +70,7 @@ public class InputFormView: UIView, UITextViewDelegate {
 }
 
 
-fileprivate class InputFormTextField: UITextView{
+public class InputFormTextField: UITextView{
     static let topPadding: CGFloat = 9
     static let bottomPadding: CGFloat = 10
     static let leftPadding: CGFloat = 14

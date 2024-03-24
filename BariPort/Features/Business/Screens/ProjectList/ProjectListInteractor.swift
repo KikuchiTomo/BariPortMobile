@@ -3,6 +3,7 @@ import BariPortAPI
 
 protocol ProjectListUsecase: AnyObject {
     func fetchProjectList() async throws -> [ProjectListEntity.Cell]
+    func postJoinChatRoom(userID: String, chatRoomID: String) async throws -> Bool
 }
 
 final class ProjectListInteractor: ProjectListUsecase{
@@ -12,6 +13,10 @@ final class ProjectListInteractor: ProjectListUsecase{
         return try await BariPortAPIClient.getProjects().map{
             $0.convert()
         }
+    }
+    
+    func postJoinChatRoom(userID: String, chatRoomID: String) async throws -> Bool{
+        return try await BariPortAPIClient.postChatRoomParticipants(chatRoomId: chatRoomID, userId: userID).convert()
     }
 }
 
@@ -28,7 +33,15 @@ extension Projects{
 }
 
 final class MockProjectListInteractor: ProjectListUsecase{
+    func postJoinChatRoom(userID: String, chatRoomID: String) async throws -> Bool {
+        false
+    }
+    
     func fetchProjectList() async throws -> [ProjectListEntity.Cell]{
         []
+    }
+    
+    func postJoinChatRoom(userID: String) async throws -> Bool{
+        false
     }
 }

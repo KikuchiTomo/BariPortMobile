@@ -12,11 +12,12 @@ import UIComponents
 class DirectMessageDataSource: NSObject, UITableViewDataSource{
     internal let cellIdentifier: String = UUID().uuidString
     
-    internal var dataSource: AsyncArray<DirectMessageEntity.Message> = .init([
-        .init(userName: "Hoge", receivedAt: Date.now, userType: .other, body: "初めて利用させていただきました！！北九州市の魅力を知ることができる素敵なプロダクトだと思いました！これからも応援しています！！"),
-        .init(userName: "PiyoPiyo", receivedAt: Date.now, userType: .me, body: "北九州市にとっても恩恵を与えることができる素敵なアプリだと思います！"),
-        .init(userName: "Hoge2", receivedAt: Date.now, userType: .other, body: "ローディングが長くユーザー体験の改善ができれば良いと思いました！mm")
-    ])
+    internal var dataSource: AsyncArray<DirectMessageEntity.Message> = .init([])
+    
+    func updateItems(_ items: [DirectMessageEntity.Message]){
+        self.dataSource.removeAll()
+        self.dataSource.append(items)
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = self.dataSource[indexPath.row]

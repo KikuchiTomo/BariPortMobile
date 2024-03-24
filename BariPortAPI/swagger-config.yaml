@@ -60,12 +60,16 @@ components:
       properties:
         id:
           type: "string" # BEGIN: id type
-        userId:
+        userName:
           type: "string" # BEGIN: userId type
-        chatRoomId:
-          type: "string" # BEGIN: chatRoomId type
         text:
+          type: "string" # BEGIN: chatRoomId type
+        imgUrl:
           type: "string" # BEGIN: text type
+        sendAt:
+          type: "string"
+        isMine: 
+          type: "string"
     MessagesPost:
       type: "object"
       properties:
@@ -178,15 +182,11 @@ paths:
       summary: "チャットルーム情報取得"
       description: "チャットルーム情報を取得します。"
       operationId: "getChatRooms"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: "object"
-              properties:
-                userId: 
-                  type: "string"
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
       responses:
         "200":
           description: "成功"
@@ -215,6 +215,11 @@ paths:
           required: true
           schema:
             type: "string" # BEGIN: chatRoomId type
+        - name: "loginUserId"
+          in: "query"
+          required: true
+          schema:
+            type: "string" # BEGIN: chatRoomId type
       responses:
         "200":
           description: "成功"
@@ -229,8 +234,7 @@ paths:
         "404":
           description: "メッセージが存在しません。"
         "500":
-          description: "取得中に何らかのエラーが発生しました。"
-  /message:
+          description: "取得中に何らかのエラーが発生しました。" 
     post:
       tags:
         - "V1"
@@ -246,10 +250,10 @@ paths:
       responses:
         "201":
           description: "成功"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Result"
+          # content:
+          #   application/json:
+          #     schema:
+          #       $ref: "#/components/schemas/Result"
         "400":
           description: "userIdまたはchatRoomIdまたはtextが渡されていないか、不正です。"
         "500":
