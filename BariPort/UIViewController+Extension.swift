@@ -24,4 +24,26 @@ extension UIViewController{
         let navVC = UINavigationController(rootViewController: self)
         return navVC
     }
+    
+    func setNavLeftButton(_ button: UIBarButtonItem) {
+        self.navigationItem.leftBarButtonItems = self.createBarButtonItemsForEachOS(button: button)
+    }
+    
+    func setNavRightButton(_ button: UIBarButtonItem) {
+        self.navigationItem.rightBarButtonItems = self.createBarButtonItemsForEachOS(button: button)
+    }
+      
+    private func createBarButtonItemsForEachOS(button: UIBarButtonItem) -> [UIBarButtonItem] {
+        if #available(iOS 11, *) {
+            return [self.createSpacer(), button]
+        } else {
+            return [button]
+        }
+    }
+    
+    private func createSpacer() -> UIBarButtonItem {
+        let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacer.width = 8 
+        return spacer
+    }
 }

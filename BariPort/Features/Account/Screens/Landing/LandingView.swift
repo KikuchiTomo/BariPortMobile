@@ -27,12 +27,11 @@ class LandingViewController: UIViewController{
         self.configSignUpButton()
         self.configLoginButton()
         self.configs()
+        self.layout()
     }
     
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        self.layout()
+        super.viewDidLayoutSubviews()              
     }
         
 }
@@ -70,6 +69,7 @@ extension LandingViewController{
         return view
         
     }
+    
     func configSignUpButton(){
         var config = UIButton.Configuration.filled()
         let container = AttributeContainer([
@@ -85,12 +85,6 @@ extension LandingViewController{
         signupButton.setTitleShadowColor(.white, for: .normal)
         signupButton.setTitleColor(.white, for: .normal)
         signupButton.addTarget(self, action: #selector(toSignUp), for: .touchUpInside)
-    }
-    
-    @objc func toSignUp() {
-        let signUpVC = SignUpRouter.assembleModules()
-        signUpVC.modalPresentationStyle = .fullScreen
-        present(signUpVC, animated: true)
     }
     
     func configLoginButton(){
@@ -112,6 +106,7 @@ extension LandingViewController{
         loginButton.configuration = config
         loginButton.setTitleShadowColor(.white, for: .normal)
         loginButton.setTitleColor(.white, for: .normal)
+        loginButton.addTarget(self, action: #selector(toSignIn), for: .touchUpInside)
     }
     
     func configs(){
@@ -119,7 +114,7 @@ extension LandingViewController{
         titleLabel.font = .systemFont(ofSize: 36, weight: .bold)
         titleLabel.textColor = .primary
                 
-        logoLabel.text = "北九州市"
+        logoLabel.text = "北九州市" // 日本語固定
         logoLabel.font = .systemFont(ofSize: 16, weight: .bold)
         logoLabel.textColor = .systemBlue
     }
@@ -160,6 +155,16 @@ extension LandingViewController{
         self.view.addSubview(logoLabel)
         self.view.addSubview(loginButton)
         self.view.addSubview(signupButton)
+    }
+}
+
+extension LandingViewController{
+    @objc func toSignUp() {
+        self.presenter.viewDidTapSignUpButton()
+    }
+        
+    @objc func toSignIn() {
+        self.presenter.viewDidTapSignInButton()
     }
 }
 

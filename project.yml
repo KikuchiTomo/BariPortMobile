@@ -3,6 +3,9 @@ packages:
   Alamofire:
     url: https://github.com/Alamofire/Alamofire
     version: 4.9.0
+  Firebase:
+    github: firebase/firebase-ios-sdk
+    from: 10.0.0
 configs:
   Debug: debug
   Release: release
@@ -65,6 +68,16 @@ targets:
     dependencies:
       - target: UIComponents
       - target: BariPortAPI
+      - package: Firebase
+        product: FirebaseAnalyticsSwift
+      - package: Firebase
+        product: FirebaseCrashlytics
+      - package: Firebase
+        product: FirebaseRemoteConfigSwift
+      - package: Firebase
+        product: FirebaseRemoteConfig
+      - package: Firebase
+        product: FirebaseAuth
     settings:
       base:
         SUPPORTS_MACCATALYST: NO

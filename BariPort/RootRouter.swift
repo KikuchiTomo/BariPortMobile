@@ -27,5 +27,9 @@ extension RootRouter{
     
     public func openURL(url: URL){
         UIApplication.shared.open(url)
+    }    
+    
+    public func dismiss(_ animated: Bool = true){
+        self.viewController.dismiss(animated: animated)
     }
 }

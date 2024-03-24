@@ -34,9 +34,14 @@ class SupportListViewController: UIViewController, UITableViewDelegate{
         containerView.addSubview(serviceNameLabel)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: containerView)
+        self.setNavRightButton(.init(image: .Common.logout, style: .plain ,target: self, action: #selector(viewDidTapLogout)))       
         self.view.backgroundColor = .white
         self.registerActionButton(button: self.headerView.supportLinkButton)
         self.configViews()
+    }
+    
+    @objc func viewDidTapLogout(){
+        self.presenter.viewDidTapLogout()
     }
     
     override func viewDidAppear(_ animated: Bool) {

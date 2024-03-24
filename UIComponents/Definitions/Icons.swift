@@ -29,6 +29,11 @@ public extension UIImage{
         public static var StarFill: UIImage{
             UIImage(systemName: "star.fill")!
         }
+        
+        public static var logout: UIImage{
+            UIImage(designed: "logout")
+                .resize(size: .init(width: 20, height: 20))!
+        }
     }
     
      /* Features 単位で構造体定義 */

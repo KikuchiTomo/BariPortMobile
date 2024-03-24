@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // iOS 15以前の場合のフォールバック
             UITabBar.appearance().barTintColor = .systemGray6
         }
+        
+        // Firebaseの初期化
+        FirebaseApp.configure()
+        
         return true
     }
 

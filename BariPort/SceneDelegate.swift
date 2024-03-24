@@ -12,6 +12,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        // 認証マネージャの起動
+        _ = AuthenticationManager.shared
+        
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
@@ -24,8 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = VC
         window.makeKeyAndVisible()
         self.window = window
-        
-        // メイン画面が決まってないので, 一旦保留
+            
         Task{ @MainActor in
             VC.dismiss(animated:true)
             VC.setContentView(showProperView())                       

@@ -40,12 +40,17 @@ class MessageListViewController: UIViewController, UITableViewDelegate, UITableV
         containerView.addSubview(serviceNameLabel)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: containerView)
+        self.setNavRightButton(.init(image: .Common.logout, style: .plain ,target: self, action: #selector(viewDidTapLogout)))
         
         directMessageTableView.delegate = self
         directMessageTableView.dataSource = self
         
         layoutViews()
         addRefreshControl()
+    }
+    
+    @objc func viewDidTapLogout(){
+        self.presenter.viewDidTapLogout()
     }
     
     override func viewDidAppear(_ animated: Bool) {

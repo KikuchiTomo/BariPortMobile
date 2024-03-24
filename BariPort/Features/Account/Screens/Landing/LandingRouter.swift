@@ -2,10 +2,35 @@ import UIKit
 import Foundation
 
 protocol LandingWireframe: RootRouter, AnyObject{
-
+    func presnetSignInView()
+    func presentSignUpView()
 }
 
 final class LandingRouter: LandingWireframe{
+    func presnetSignInView() {
+        let vc = SignInRouter.assembleModules()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        
+        if let rootVC = RootViewController.appRootViewControllerInstance(){
+            rootVC.show(vc, sender: nil)
+        }else{
+            self.viewController.present(vc, animated: true)
+        }
+    }
+    
+    func presentSignUpView() {
+        let vc = SignUpRouter.assembleModules()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        
+        if let rootVC = RootViewController.appRootViewControllerInstance(){
+            rootVC.show(vc, sender: nil)
+        }else{
+            self.viewController.present(vc, animated: true)
+        }
+    }
+    
     internal unowned let viewController: UIViewController
 
     private init(viewController: UIViewController){

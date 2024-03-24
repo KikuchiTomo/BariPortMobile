@@ -8,6 +8,7 @@ protocol ProjectListPresentation: AnyObject {
     func viewDidAppear()
     func viewWillRefresh()
     func viewDidTapTester(_ url: URL)
+    func viewDidTapLogout()
 }
 
 final class ProjectListPresenter: ProjectListPresentation{
@@ -62,6 +63,37 @@ final class ProjectListPresenter: ProjectListPresentation{
             }
         }
     }
+    
+    func viewDidTapLogout(){
+        Task{ @MainActor in
+            // TODO: ここ汚すぎるのでリファクタする
+            // TODO: ローカライズする
+            self.router.presentAlert(type:
+                .alert(
+                    "確認",
+                    "ログアウトしますか？",
+                    [
+                        .ok({ _ in
+                            Task{
+                                do{
+                                    _ = try await AuthenticationManager.shared.signOut()
+                                    Task{ @MainActor in
+                                        // TODO: ログアウト後の画面
+                                    }
+                                }catch(let error){
+                                    Task{ @MainActor in
+                                        self.router.presentError(error: error)
+                                    }
+                                }
+                            }
+                        }),
+                        .cancel({ _ in
+                            
+                        })
+                    ])
+            )
+        }
+    }
 }
 
 final class MockProjectListPresenter: ProjectListPresentation{
@@ -85,6 +117,10 @@ final class MockProjectListPresenter: ProjectListPresentation{
     }
     
     func viewDidTapTester(_ url: URL) {
+        
+    }
+    
+    func viewDidTapLogout(){
         
     }
 }

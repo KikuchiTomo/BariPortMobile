@@ -21,6 +21,11 @@ public enum LocalizationString: String{
     case alertOK
     case commonSignup
     case orLogin
+    case commonSignIn
+    case commonError
+    case alertNotAllowEmptyEmail
+    case alertNotAllowInvalidEmail
+    case alertNotAllowEmptyPassword
     
     public var localized: String{
         get {

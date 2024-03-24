@@ -12,13 +12,13 @@ import AVFoundation
 public class TitleBackView: UIView{
     private let player = AVPlayer(url: Bundle.current.url(forResource: "kitaQ", withExtension: "mov")!)
     private var isFirst: Bool = true
-    
     private var observers: (player: NSObjectProtocol,
                                 willEnterForeground: NSObjectProtocol,
                                 bounds: NSKeyValueObservation)?
     
     public init(){
         super.init(frame: .zero)
+                
     }
     
     required init?(coder: NSCoder) {
@@ -45,6 +45,14 @@ public class TitleBackView: UIView{
             dimOverlay.opacity = 0.7
             layer.addSublayer(dimOverlay)
             
+            let graLayer = CAGradientLayer()
+            graLayer.colors = [UIColor.primary.cgColor, UIColor.init(white: 0.0, alpha: 0.0).cgColor]
+            graLayer.startPoint = .init(x: 0.5, y: 1.0)
+            graLayer.endPoint = .init(x: 0.5, y: 0.0)
+            // 画面縦に半分だけ表示
+            graLayer.frame = .init(origin: .init(x: bounds.origin.x, y: bounds.size.height / 2.0), size: .init(width: bounds.size.width, height: bounds.size.height / 2.0))
+            layer.addSublayer(graLayer)
+            
             let playerObserver = NotificationCenter.default.addObserver(
                 forName: .AVPlayerItemDidPlayToEndTime,
                 object: player.currentItem,
@@ -69,8 +77,6 @@ public class TitleBackView: UIView{
             
             observers = (playerObserver, willEnterForegroundObserver, boundsObserver)
             isFirst = false
-            
-           
         }
     }
     
