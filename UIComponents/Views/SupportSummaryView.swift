@@ -15,6 +15,16 @@ public class SupportSummaryView: UIView{
     private (set) public lazy var supportLinkButton: SupportButton = generateSupportButton()
     private lazy var labelGuide: UILayoutGuide = UILayoutGuide()
     
+    public func setValue(value: Float){
+        let repValue = min(max(value, 0.0), 5.0)
+        self.reputationStarView.updateMaskLayers(value: repValue)
+        self.reputationValueView.text =  String(format: "%.1f", repValue)
+        self.reputationValueView.setNeedsDisplay()
+        self.reputationStarView.setNeedsDisplay()
+        self.setNeedsDisplay()
+        self.layoutIfNeeded()
+    }
+    
     public var value: Float = 0.0{
         didSet{
             let repValue = min(max(value, 0.0), 5.0)

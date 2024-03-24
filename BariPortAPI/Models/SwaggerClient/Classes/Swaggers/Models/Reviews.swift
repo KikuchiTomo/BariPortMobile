@@ -15,10 +15,10 @@ public struct Reviews: Codable {
     public var sendAt: String?
     public var imgUrl: String?
     public var companyName: String?
-    public var evaluationScore: Int?
+    public var evaluationScore: Float?
     public var _description: String?
 
-    public init(_id: String? = nil, sendAt: String? = nil, imgUrl: String? = nil, companyName: String? = nil, evaluationScore: Int? = nil, _description: String? = nil) {
+    public init(_id: String? = nil, sendAt: String? = nil, imgUrl: String? = nil, companyName: String? = nil, evaluationScore: Float? = nil, _description: String? = nil) {
         self._id = _id
         self.sendAt = sendAt
         self.imgUrl = imgUrl

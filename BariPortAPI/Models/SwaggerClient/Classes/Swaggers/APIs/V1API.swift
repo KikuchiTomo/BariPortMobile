@@ -13,10 +13,11 @@ open class V1API {
     /**
      チャットルーム情報取得
 
+     - parameter body: (body)  
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getChatRooms(completion: @escaping ((_ data: [ChatRooms]?,_ error: Error?) -> Void)) {
-        getChatRoomsWithRequestBuilder().execute { (response, error) -> Void in
+    open class func getChatRooms(body: ChatRoomsListBody, completion: @escaping ((_ data: [ChatRooms]?,_ error: Error?) -> Void)) {
+        getChatRoomsWithRequestBuilder(body: body).execute { (response, error) -> Void in
             completion(response?.body, error)
         }
     }
@@ -45,19 +46,20 @@ open class V1API {
   "projectName" : "projectName",
   "latestMessageSendAt" : "latestMessageSendAt"
 } ]}]
+     - parameter body: (body)  
 
      - returns: RequestBuilder<[ChatRooms]> 
      */
-    open class func getChatRoomsWithRequestBuilder() -> RequestBuilder<[ChatRooms]> {
+    open class func getChatRoomsWithRequestBuilder(body: ChatRoomsListBody) -> RequestBuilder<[ChatRooms]> {
         let path = "/chat_rooms/list"
         let URLString = SwaggerClientAPI.basePath + path
-        let parameters: [String:Any]? = nil
+        let parameters = JSONEncodingHelper.encodingParameters(forEncodableObject: body)
         let url = URLComponents(string: URLString)
 
 
         let requestBuilder: RequestBuilder<[ChatRooms]>.Type = SwaggerClientAPI.requestBuilderFactory.getBuilder()
 
-        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: false)
+        return requestBuilder.init(method: "GET", URLString: (url?.string ?? URLString), parameters: parameters, isBody: true)
     }
     /**
      メッセージ一覧取得
@@ -166,14 +168,14 @@ open class V1API {
 
      - examples: [{contentType=application/json, example=[ {
   "imgUrl" : "imgUrl",
-  "evaluationScore" : 0,
+  "evaluationScore" : "",
   "companyName" : "companyName",
   "description" : "description",
   "id" : "id",
   "sendAt" : "sendAt"
 }, {
   "imgUrl" : "imgUrl",
-  "evaluationScore" : 0,
+  "evaluationScore" : "",
   "companyName" : "companyName",
   "description" : "description",
   "id" : "id",

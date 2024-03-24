@@ -3,14 +3,14 @@ import UIKit
 import BariPortAPI
 
 protocol MessageListUsecase: AnyObject {
-    func fetchMessages(projectID: String) async throws -> [MessageListEntity.Cell]
+    func fetchMessages(userID: String) async throws -> [MessageListEntity.Cell]
 }
 
 final class MessageListInteractor: MessageListUsecase{
     init(){}
     
-    func fetchMessages(projectID: String) async throws -> [MessageListEntity.Cell]{
-        return try await BariPortAPIClient.getChatRooms(projectID: projectID).map{ $0.convert() }
+    func fetchMessages(userID: String) async throws -> [MessageListEntity.Cell]{
+        return try await BariPortAPIClient.getChatRooms(userId: userID).map{ $0.convert() }
     }
 }
 
@@ -30,7 +30,7 @@ extension ChatRooms{
 }
 
 final class MockMessageListInteractor: MessageListUsecase{
-    func fetchMessages(projectID: String) async throws -> [MessageListEntity.Cell] {
+    func fetchMessages(userID: String) async throws -> [MessageListEntity.Cell] {
         []
     }    
 }

@@ -119,7 +119,7 @@ extension SupportListViewController{
 extension SupportListViewController: SupportListView{
     func viewWillReloadData(){
         self.tableView.reloadData()
-        self.headerView.value = self.presenter.dataSource.totalReputationValue
+        self.headerView.setValue(value: self.presenter.dataSource.totalReputationValue)
     }
     
     func viewWillShowLoadingView(){
