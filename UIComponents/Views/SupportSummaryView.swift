@@ -18,6 +18,7 @@ public class SupportSummaryView: UIView{
     public func setValue(value: Float){
         let repValue = min(max(value, 0.0), 5.0)
         self.reputationStarView.updateMaskLayers(value: repValue)
+        print(self.reputationStarView.updateMaskLayers)
         self.reputationValueView.text =  String(format: "%.1f", repValue)
         self.reputationValueView.setNeedsDisplay()
         self.reputationStarView.setNeedsDisplay()

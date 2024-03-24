@@ -33,33 +33,35 @@ public class ReputationStarView: UIView{
     }
     
     public func updateMaskLayers(value: Float){
-        self.layoutIfNeeded()
-        
-        let integer = Int(floor(value))
-        let fraction = value.truncatingRemainder(dividingBy: 1)
-        // マスクViewを追加する
-        for index in 0..<ReputationStarView.starNumber{
-            let imageView = starFillViews[index]
-            let maskLayer = CAShapeLayer()
-            maskLayer.frame = imageView.bounds
+        DispatchQueue.main.async {
+            self.layoutIfNeeded()
             
-            let frame = maskLayer.frame
-            let width: CGFloat
-            
-            if integer > index{
-                width = frame.width
-            }else if index == integer{
-                width = CGFloat(fraction) * frame.width
-            }else{
-                width = 0.0
+            let integer = Int(floor(value))
+            let fraction = value.truncatingRemainder(dividingBy: 1)
+            // マスクViewを追加する
+            for index in 0..<ReputationStarView.starNumber{
+                let imageView = self.starFillViews[index]
+                let maskLayer = CAShapeLayer()
+                maskLayer.frame = imageView.bounds
+                
+                let frame = maskLayer.frame
+                let width: CGFloat
+                
+                if integer > index{
+                    width = frame.width
+                }else if index == integer{
+                    width = CGFloat(fraction) * frame.width
+                }else{
+                    width = 0.0
+                }
+                
+                let newFrame = CGRect(x: frame.origin.x, y: frame.origin.y, width: width, height: frame.height)
+                let roundrRectangle = UIBezierPath(rect: newFrame)
+                maskLayer.path = roundrRectangle.cgPath
+                
+                imageView.layer.mask = maskLayer
+                imageView.setNeedsDisplay()
             }
-            
-            let newFrame = CGRect(x: frame.origin.x, y: frame.origin.y, width: width, height: frame.height)
-            let roundrRectangle = UIBezierPath(rect: newFrame)
-            maskLayer.path = roundrRectangle.cgPath
-            
-            imageView.layer.mask = maskLayer
-            imageView.setNeedsDisplay()
         }
     }
     
