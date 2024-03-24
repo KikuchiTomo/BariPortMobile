@@ -53,7 +53,13 @@ public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UIT
             }
         }
     }
-    
+    private lazy var projectLabelBackgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(displayP3Red: 255/255.0, green: 254/255.0, blue: 233/255.0, alpha: 1.0)
+        view.layer.cornerRadius = 6
+        view.layer.masksToBounds = true
+        return view
+    }()
     private lazy var projectLabel: UILabel = generateLabel(.title)
     private lazy var companyLabel: UILabel = generateLabel(.title)
     private lazy var commentLabel: UILabel = generateLabel(.body)
@@ -80,7 +86,6 @@ public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UIT
         self.commentLabel.text = content.comment
         
         self.projectLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        self.projectLabel.backgroundColor = UIColor.yellow.withAlphaComponent(0.4)
         
         self.companyLabel.font = UIFont.systemFont(ofSize: 14)
         self.companyLabel.textAlignment = .left
@@ -100,25 +105,29 @@ public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UIT
             cornerView.widthAnchor.constraint(equalTo: widthAnchor),
             cornerView.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            projectLabel.topAnchor.constraint(equalTo: cornerView.topAnchor, constant: 13),
-            projectLabel.leftAnchor.constraint(equalTo: cornerView.leftAnchor, constant: 8),
+            projectLabel.topAnchor.constraint(equalTo: cornerView.topAnchor, constant: 20),
+            projectLabel.leftAnchor.constraint(equalTo: cornerView.leftAnchor, constant: 20),
+            projectLabelBackgroundView.topAnchor.constraint(equalTo: projectLabel.topAnchor, constant: -8), // 上下左右に余白を追加
+            projectLabelBackgroundView.bottomAnchor.constraint(equalTo: projectLabel.bottomAnchor, constant: 8),
+            projectLabelBackgroundView.leadingAnchor.constraint(equalTo: projectLabel.leadingAnchor, constant: -8),
+            projectLabelBackgroundView.trailingAnchor.constraint(equalTo: projectLabel.trailingAnchor, constant: 8),
 
             companyLabel.topAnchor.constraint(equalTo: cornerView.topAnchor, constant: 13),
-            companyLabel.rightAnchor.constraint(equalTo: cornerView.rightAnchor, constant: -8),
+            companyLabel.rightAnchor.constraint(equalTo: cornerView.rightAnchor, constant: -16),
 
-            commentLabel.topAnchor.constraint(equalTo: companyLabel.bottomAnchor, constant: 16),
+            commentLabel.topAnchor.constraint(equalTo: projectLabelBackgroundView.bottomAnchor, constant: 24),
             commentLabel.centerXAnchor.constraint(equalTo: cornerView.centerXAnchor),
             commentLabel.widthAnchor.constraint(equalTo: cornerView.widthAnchor, constant: -32),
             
             // testerButtonの制約
             testerButton.topAnchor.constraint(equalTo: commentLabel.bottomAnchor, constant: 16),
-            testerButton.leadingAnchor.constraint(equalTo: cornerView.leadingAnchor, constant: 16),
-            testerButton.heightAnchor.constraint(equalToConstant: 44),
+            testerButton.leadingAnchor.constraint(equalTo: cornerView.leadingAnchor, constant: 24),
+            testerButton.heightAnchor.constraint(equalToConstant: 40),
             
             // directMessageButtonの制約
             directMessageButton.topAnchor.constraint(equalTo: testerButton.topAnchor),
-            directMessageButton.leadingAnchor.constraint(equalTo: testerButton.trailingAnchor, constant: 8), // testerButtonとの間隔
-            directMessageButton.trailingAnchor.constraint(equalTo: cornerView.trailingAnchor, constant: -16),
+            directMessageButton.leadingAnchor.constraint(equalTo: testerButton.trailingAnchor, constant: 16), // testerButtonとの間隔
+            directMessageButton.trailingAnchor.constraint(equalTo: cornerView.trailingAnchor, constant: -24),
             directMessageButton.heightAnchor.constraint(equalTo: testerButton.heightAnchor),
             
             // ボタンの幅を等しくするための追加の制約
@@ -132,12 +141,13 @@ public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UIT
     }
     
     func configView(){
-        self.addSubview(projectLabel)
         self.addSubview(commentLabel)
         self.addSubview(companyLabel)
         self.addSubview(testerButton)
         self.addSubview(directMessageButton)
         self.addSubview(cornerView)
+        cornerView.addSubview(projectLabelBackgroundView)
+        cornerView.addSubview(projectLabel)
         
         // UIViewに隠れるので前に持ってきてますw
         self.bringSubviewToFront(directMessageButton)
@@ -146,10 +156,12 @@ public class ProjectListTableCell<Dataframe: ProjectListTableViewDataframe>: UIT
         // Configs
         cornerView.layer.masksToBounds = true
         cornerView.layer.cornerRadius = 12
-        cornerView.layer.borderWidth = 1
-        cornerView.layer.borderColor = UIColor.black.cgColor
+        cornerView.layer.borderWidth = 2
+        cornerView.layer.borderColor = UIColor.systemGray3.cgColor
         cornerView.isUserInteractionEnabled = true
         selectionStyle = .none
+        
+        projectLabelBackgroundView.translatesAutoresizingMaskIntoConstraints = false
         
         self.directMessageButton.addTarget(self, action: #selector(tapActionDM), for: .touchUpInside)
         self.testerButton.addTarget(self, action: #selector(tapActionTester), for: .touchUpInside)
@@ -189,12 +201,13 @@ extension ProjectListTableCell{
     fileprivate func generateButton(_ buttonLabel: String) -> UIButton{
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .systemCyan
+        button.backgroundColor = UIColor.systemCyan.withAlphaComponent(0.1)
         button.layer.cornerRadius = 10
-        button.layer.borderWidth = 1
+        button.layer.borderWidth = 0.8
         button.layer.borderColor = UIColor.black.cgColor
         button.setTitle(buttonLabel, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        button.setTitleColor(.gray, for: .normal)
         return button
     }
 }
