@@ -29,7 +29,13 @@ final class MessageListPresenter: MessageListPresentation{
                     self.view?.showLoadingView()
                 }
                 
-                let data = try await self.interactor.fetchMessages(projectID: "")
+                guard let userID = AuthenticationManager.shared.userID else {
+                    return
+                }
+                
+                print(userID)
+                
+                let data = try await self.interactor.fetchMessages(userID: userID)
                 Task{ @MainActor in
                     self.view?.updateDirectMessageList(data)
                     self.view?.endRefreshing()

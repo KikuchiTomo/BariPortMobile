@@ -93,7 +93,7 @@ components:
         companyName:
           type: "string"           
         evaluationScore:
-          type: "integer"
+          type: "float"
         description:
           type: "string"           
     Company:
@@ -178,6 +178,15 @@ paths:
       summary: "チャットルーム情報取得"
       description: "チャットルーム情報を取得します。"
       operationId: "getChatRooms"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                userId: 
+                  type: "string"
       responses:
         "200":
           description: "成功"

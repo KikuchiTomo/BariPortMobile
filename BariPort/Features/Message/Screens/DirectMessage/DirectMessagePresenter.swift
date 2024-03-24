@@ -9,18 +9,22 @@ final class DirectMessagePresenter: DirectMessagePresentation{
     private weak var view: DirectMessageView?
     private let router: DirectMessageWireframe
     private let interactor: DirectMessageUsecase
+    private let chatRoomID: String
     
     internal var dataSource: DirectMessageDataSource       
     
     init(view: DirectMessageView,
          router: DirectMessageWireframe,
-         interactor: DirectMessageUsecase) {
+         interactor: DirectMessageUsecase,
+         chatRoomID: String
+    ) {
 
         self.view = view
         self.router = router
-        self.interactor = interactor    
+        self.interactor = interactor  
+        self.chatRoomID = chatRoomID
         
-        self.dataSource = .init()              
+        self.dataSource = .init()
     }
 }
 

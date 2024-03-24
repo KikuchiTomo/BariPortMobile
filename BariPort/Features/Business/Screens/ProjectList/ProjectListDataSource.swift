@@ -42,7 +42,7 @@ class ProjectListDataSource: NSObject, UITableViewDataSource{
                 content: message ??
                     .init(url: URL(string: "https://www.weblio.jp/content/%E6%BA%96%E5%82%99%E4%B8%AD")!, id: "", projectName: "", companyName: "", comment: ""))
             listCell.viewDidTapDirectMessage = { id in
-                self.presenter?.viewDidTapDM()
+                self.presenter?.viewDidTapDM(id)
             }
             listCell.viewDidTapTester = { url in
                 self.presenter?.viewDidTapTester(url)
