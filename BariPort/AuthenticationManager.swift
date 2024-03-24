@@ -47,7 +47,7 @@ class AuthenticationManager{
     
     public var userID: String?{
         get{
-            return self.currentUser?.uid
+            return "sample01" //self.currentUser?.uid
         }
     }
     

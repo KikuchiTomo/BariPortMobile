@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol TabSwitcher: AnyObject {
-    func tabSwitch(to tab: Int)
+    func tabSwitch(to tab: Int, chatRoomID: String)
 }
 
 class Switcher {
@@ -19,7 +19,7 @@ class Switcher {
     
     private init() {}
     
-    func tabSwitch(to tab: Int) {        
-        tabHostViewController?.tabSwitch(to: tab)
+    func tabSwitch(to tab: Int, chatRoomID: String) {
+        tabHostViewController?.tabSwitch(to: tab, chatRoomID: chatRoomID)
     }
 }

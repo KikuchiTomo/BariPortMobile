@@ -35,7 +35,6 @@ final class MessageListRouter: MessageListWireframe{
     }
     
     @MainActor func presetDirectMessageView(chatRoomID: String) {
-        // ID渡す
-        self.viewController.navigationController?.pushViewController(DirectMessageRouter.assembleModules(), animated: true)
+        self.viewController.navigationController?.pushViewController(DirectMessageRouter.assembleModules(chatRoomID: chatRoomID), animated: true)
     }
 }

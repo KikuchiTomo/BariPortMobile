@@ -12,22 +12,28 @@ import Foundation
 public struct MessagesGet: Codable {
 
     public var _id: String?
-    public var userId: String?
-    public var chatRoomId: String?
+    public var userName: String?
     public var text: String?
+    public var imgUrl: String?
+    public var sendAt: String?
+    public var isMine: String?
 
-    public init(_id: String? = nil, userId: String? = nil, chatRoomId: String? = nil, text: String? = nil) {
+    public init(_id: String? = nil, userName: String? = nil, text: String? = nil, imgUrl: String? = nil, sendAt: String? = nil, isMine: String? = nil) {
         self._id = _id
-        self.userId = userId
-        self.chatRoomId = chatRoomId
+        self.userName = userName
         self.text = text
+        self.imgUrl = imgUrl
+        self.sendAt = sendAt
+        self.isMine = isMine
     }
 
     public enum CodingKeys: String, CodingKey { 
         case _id = "id"
-        case userId
-        case chatRoomId
+        case userName
         case text
+        case imgUrl
+        case sendAt
+        case isMine
     }
 
 }

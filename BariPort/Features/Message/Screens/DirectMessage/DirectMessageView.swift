@@ -3,7 +3,7 @@ import Foundation
 import UIComponents
 
 protocol DirectMessageView: AnyObject{
-
+    func viewWillUpdateTableView()
 }
 
 class DirectMessageViewController: UIViewController, UITableViewDelegate{
@@ -31,6 +31,11 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
         var frame = self.downloadButtonView.frame
         frame.size.height = 60
         self.tableView.tableHeaderView!.frame = frame
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        presenter.viewDidAppear()
     }
     
     func generateTableView() -> UITableView{
@@ -63,6 +68,8 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
         self.tableView.delegate = self
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.separatorStyle = .none
+        
+        self.inputFormView.sendButton.addTarget(self, action: #selector(viewDidTapSendButton(_:)), for: .touchUpInside)
     }
     
     func generateInputFormButton() -> InputFormView{
@@ -81,6 +88,15 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
             inputFormView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             inputFormView.trailingAnchor.constraint(equalTo: view.trailingAnchor),            
         ])
+    }
+    
+    @objc func viewDidTapSendButton(_ sender: UIButton){
+        guard let text = self.inputFormView.textField.text else { return }
+        
+        self.presenter.viewDidTapSendButton(message: text)
+        
+        self.inputFormView.textField.text = ""
+        self.inputFormView.textField.resignFirstResponder()
     }
     
     // safeAreadInsetsはlayout後に大きさが確定
@@ -117,8 +133,12 @@ class DirectMessageViewController: UIViewController, UITableViewDelegate{
                 self.gradationView.alpha = 1.0
             }})
     }
+    
+  
 }
 
 extension DirectMessageViewController: DirectMessageView{
-    
+    func viewWillUpdateTableView(){
+        self.tableView.reloadData()
+    }
 }

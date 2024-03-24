@@ -9,6 +9,7 @@ protocol ProjectListPresentation: AnyObject {
     func viewWillRefresh()
     func viewDidTapTester(_ url: URL)
     func viewDidTapLogout()
+    func viewDidTapJoin(chatRoomID: String)
 }
 
 final class ProjectListPresenter: ProjectListPresentation{
@@ -30,7 +31,7 @@ final class ProjectListPresenter: ProjectListPresentation{
     }
     
     func viewDidTapDM(_ id: String){
-        Switcher.shared.tabSwitch(to: 1)
+        Switcher.shared.tabSwitch(to: 1, chatRoomID: id)
     }
     
     func viewDidAppear(){
@@ -57,6 +58,19 @@ final class ProjectListPresenter: ProjectListPresentation{
                     self.view?.viewWillHideLoadingView()
                 }
             } catch let error {
+                Task{ @MainActor in
+                    self.router.presentError(error: error)
+                }
+            }
+        }
+    }
+    
+    func viewDidTapJoin(chatRoomID: String){
+        Task{
+            guard let userID = AuthenticationManager.shared.userID else { return }
+            do{
+                try await self.interactor.postJoinChatRoom(userID: userID, chatRoomID: chatRoomID)
+            }catch(let error){
                 Task{ @MainActor in
                     self.router.presentError(error: error)
                 }
@@ -125,6 +139,10 @@ final class MockProjectListPresenter: ProjectListPresentation{
     }
     
     func viewDidTapLogout(){
+        
+    }
+    
+    func viewDidTapJoin(chatRoomID: String){
         
     }
 }
