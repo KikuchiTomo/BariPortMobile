@@ -32,7 +32,9 @@ final class SupportListPresenter: SupportListPresentation{
             self.router.openURL(url: URL(string: "https://it-saiyou-kitaq.com/")!)
         }
     }
-    
+
+    // TODO: リファクタ
+    // ここでのAPI呼び出しは避けるべき. 不要なAPI呼び出し回数が増える.Mock版なのでとりあえずここ    
     func viewDidAppear(){
         fetchReviews()
     }
