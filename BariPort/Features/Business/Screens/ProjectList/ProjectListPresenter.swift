@@ -33,7 +33,9 @@ final class ProjectListPresenter: ProjectListPresentation{
     func viewDidTapDM(_ id: String){
         Switcher.shared.tabSwitch(to: 1, chatRoomID: id)
     }
-    
+
+    // TODO: リファクタ
+    // ここでのAPI呼び出しは避けるべき. 不要なAPI呼び出し回数が増える.Mock版なのでとりあえずここ    
     func viewDidAppear(){
         fetchProjectList()
     }
