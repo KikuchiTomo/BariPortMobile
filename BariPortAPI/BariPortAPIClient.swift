@@ -12,7 +12,6 @@ public class BariPortAPIClient{
     typealias U = BariPortAPIClient
     private init(){}
     
-    // TODO: スマートに書くための関数. もっといい書き方あったら教えてください🙇‍♂️. static関数にするとアクセスが遅すぎるのでこうする
     fileprivate func withUnwrapOptional<T>(_ data: T?, _ error: Error?, _ config:  CheckedContinuation<T, Error>){
         if let error = error{
             config.resume(throwing: error)
