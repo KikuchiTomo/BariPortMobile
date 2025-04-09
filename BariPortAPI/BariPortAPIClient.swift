@@ -102,6 +102,7 @@ public class BariPortAPIClient{
 }
 
 public extension String{
+    // TODO: これは良くないので要修正 (和暦の時おかしくなる)
     func parseFromBariPortFormat() -> Date?{
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -116,6 +117,7 @@ public extension String{
 }
 
 public extension Date{
+     // TODO: これは良くないので要修正 (和暦の時おかしくなる)
     func bariPortFormatString() -> String{
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
